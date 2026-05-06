@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate JSON files
+        shell: bash
+        run: |
+          mapfile -d '' files < <(find . -path './.git' -prune -o -name '*.json' -print0)
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "No JSON files found."
+            exit 0
+          fi
+          for file in "${files[@]}"; do
+            python -m json.tool "$file" >/dev/null
+          done
+
+      - name: Check JavaScript syntax
+        shell: bash
+        run: |
+          mapfile -d '' files < <(find . -path './.git' -prune -o -name '*.js' -print0)
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "No JavaScript files found."
+            exit 0
+          fi
+          for file in "${files[@]}"; do
+            node --check "$file"
+          done
