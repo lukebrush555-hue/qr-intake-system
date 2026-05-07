@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SamplePass</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="claim-card" aria-labelledby="offer-title">
+        <header class="site-header">
+          <div class="brand-mark" aria-hidden="true">SP</div>
+          <p class="brand-name" data-config-text="BRAND_NAME">SamplePass</p>
+        </header>
+
+        <div class="offer-media">
+          <img
+            src="../../assets/images/samplepass-stand.jpg"
+            alt="Premium tabletop QR/NFC stand"
+            data-config-src="IMAGE_SRC"
+            data-config-alt="FREE_ITEM"
+          />
+        </div>
+
+        <div class="offer-copy">
+          <p class="free-item" data-config-text="FREE_ITEM">Premium tabletop QR/NFC stand</p>
+          <h1 id="offer-title" data-config-text="OFFER_HEADLINE">Get a free handcrafted QR/NFC stand</h1>
+          <p class="subheadline" data-config-text="SUBHEADLINE">
+            Scan, tap, and connect your physical booth or table to a simple
+            digital experience.
+          </p>
+        </div>
+
+        <form id="samplepass-form" class="claim-form" novalidate>
+          <div class="field">
+            <label for="full-name">Full name</label>
+            <input id="full-name" name="name" autocomplete="name" required />
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone number</label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="business-name">Business name</label>
+            <input
+              id="business-name"
+              name="business_name"
+              autocomplete="organization"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="notes">Notes <span>optional</span></label>
+            <textarea id="notes" name="notes" rows="4"></textarea>
+          </div>
+
+          <button id="submit-button" type="submit" data-config-text="CTA_LABEL">
+            Claim My Free Stand
+          </button>
+          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="../../configs/samplepass-demo.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
