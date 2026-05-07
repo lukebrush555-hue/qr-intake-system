@@ -1,6 +1,6 @@
 window.SAMPLEPASS_DEMO_CONFIG = {
-  SUPABASE_URL: "",
-  SUPABASE_PUBLISHABLE_KEY: "",
+  SUPABASE_URL: "https://chqwqnxxggswbsijxnio.supabase.co",
+  SUPABASE_PUBLISHABLE_KEY: "sb_publishable_KY_sTlKcppTc8dlDZjCqaA_2XV6COmP",
   BRAND_NAME: "SamplePass",
   OFFER_HEADLINE: "Get a free handcrafted QR/NFC stand",
   SUBHEADLINE:
