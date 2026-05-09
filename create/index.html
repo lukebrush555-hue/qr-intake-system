@@ -139,6 +139,10 @@
       let activePlatform = null;
       let imageFile = null;
       let imagePreview = '../assets/images/backyard-blooms-honey.svg';
+      let existingSlug = null;
+
+      const params = new URLSearchParams(window.location.search);
+      existingSlug = params.get('slug');
 
       const modal = document.getElementById('social-modal');
       const modalTitle = document.getElementById('modal-title');
@@ -218,14 +222,62 @@
         return `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
       }
 
+      async function loadExistingPage() {
+        if (!existingSlug) return;
+
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/vendor_pages?slug=eq.${existingSlug}&select=*`,
+          {
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization: `Bearer ${SUPABASE_KEY}`,
+            },
+          }
+        );
+
+        const pages = await response.json();
+        const page = pages[0];
+
+        if (!page) return;
+
+        document.getElementById('vendor-name').textContent = page.vendor_name || '';
+        document.getElementById('vendor-category').textContent = page.category || '';
+        document.getElementById('product-name').textContent = page.product_name || '';
+        document.getElementById('product-description').textContent = page.description || '';
+
+        if (page.image_url) {
+          imagePreview = page.image_url;
+          document.getElementById('product-image').src = page.image_url;
+        }
+
+        const socialMap = {
+          instagram: page.instagram,
+          facebook: page.facebook,
+          website: page.website,
+          order: page.order_link,
+        };
+
+        Object.entries(socialMap).forEach(([platform, value]) => {
+          if (!value) return;
+
+          socials[platform] = value;
+
+          const target = document.querySelector(`[data-platform="${platform}"]`);
+          target.textContent = value;
+          target.classList.remove('adding');
+        });
+
+        document.getElementById('launch-page').textContent = 'Save Changes';
+      }
+
       document.getElementById('launch-page').addEventListener('click', async () => {
         const launchButton = document.getElementById('launch-page');
         launchButton.disabled = true;
-        launchButton.textContent = 'Launching...';
+        launchButton.textContent = existingSlug ? 'Saving...' : 'Launching...';
 
         try {
           const vendorName = document.getElementById('vendor-name').textContent.trim();
-          const slug = slugify(vendorName);
+          const slug = existingSlug || slugify(vendorName);
           const imageUrl = await uploadImage(slug);
 
           const payload = {
@@ -242,32 +294,54 @@
             order_link: socials.order || null,
           };
 
-          const response = await fetch(`${SUPABASE_URL}/rest/v1/vendor_pages`, {
-            method: 'POST',
-            headers: {
-              apikey: SUPABASE_KEY,
-              Authorization: `Bearer ${SUPABASE_KEY}`,
-              'Content-Type': 'application/json',
-              Prefer: 'return=minimal',
-            },
-            body: JSON.stringify(payload),
-          });
+          let response;
+
+          if (existingSlug) {
+            response = await fetch(`${SUPABASE_URL}/rest/v1/vendor_pages?slug=eq.${existingSlug}`, {
+              method: 'PATCH',
+              headers: {
+                apikey: SUPABASE_KEY,
+                Authorization: `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(payload),
+            });
+          } else {
+            response = await fetch(`${SUPABASE_URL}/rest/v1/vendor_pages`, {
+              method: 'POST',
+              headers: {
+                apikey: SUPABASE_KEY,
+                Authorization: `Bearer ${SUPABASE_KEY}`,
+                'Content-Type': 'application/json',
+                Prefer: 'return=minimal',
+              },
+              body: JSON.stringify(payload),
+            });
+          }
 
           if (!response.ok) {
             throw new Error('Page save failed');
           }
 
           const liveUrl = `${location.origin}/qr-intake-system/sample/?slug=${slug}`;
+          const editUrl = `${location.origin}/qr-intake-system/create/?slug=${slug}`;
 
-          document.getElementById('launch-link').innerHTML = `<a href="${liveUrl}" target="_blank">${liveUrl}</a>`;
+          document.getElementById('launch-link').innerHTML = `
+            <div><a href="${liveUrl}" target="_blank">Live Page</a></div>
+            <div style="margin-top:8px;"><a href="${editUrl}" target="_blank">Edit Page</a></div>
+          `;
+
+          existingSlug = slug;
+          launchButton.textContent = 'Save Changes';
         } catch (error) {
           console.error(error);
           document.getElementById('launch-link').textContent = 'Something went wrong.';
         } finally {
           launchButton.disabled = false;
-          launchButton.textContent = 'Launch My Free Sample';
         }
       });
+
+      loadExistingPage();
     </script>
   </body>
 </html>
