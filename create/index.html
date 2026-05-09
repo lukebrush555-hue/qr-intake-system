@@ -133,10 +133,12 @@
     <script>
       const SUPABASE_URL = 'https://chqwqnxxggswbsijxnio.supabase.co';
       const SUPABASE_KEY = 'sb_publishable_KY_sTlKcppTc8dlDZjCqaA_2XV6COmP';
+      const STORAGE_BUCKET = 'vendor-page-images';
 
       const socials = {};
       let activePlatform = null;
-      let imageData = '../assets/images/backyard-blooms-honey.svg';
+      let imageFile = null;
+      let imagePreview = '../assets/images/backyard-blooms-honey.svg';
 
       const modal = document.getElementById('social-modal');
       const modalTitle = document.getElementById('modal-title');
@@ -168,11 +170,13 @@
         const file = event.target.files[0];
         if (!file) return;
 
+        imageFile = file;
+
         const reader = new FileReader();
 
         reader.onload = (e) => {
-          imageData = e.target.result;
-          document.getElementById('product-image').src = imageData;
+          imagePreview = e.target.result;
+          document.getElementById('product-image').src = imagePreview;
         };
 
         reader.readAsDataURL(file);
@@ -186,43 +190,83 @@
           .replace(/^-|-$/g, '');
       }
 
-      document.getElementById('launch-page').addEventListener('click', async () => {
-        const vendorName = document.getElementById('vendor-name').textContent.trim();
-        const slug = slugify(vendorName);
-
-        const payload = {
-          slug,
-          vendor_name: vendorName,
-          category: document.getElementById('vendor-category').textContent.trim(),
-          product_name: document.getElementById('product-name').textContent.trim(),
-          description: document.getElementById('product-description').textContent.trim(),
-          image_url: imageData,
-          cta_text: 'Claim My Free Sample',
-          instagram: socials.instagram || null,
-          facebook: socials.facebook || null,
-          website: socials.website || null,
-          order_link: socials.order || null,
-        };
-
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/vendor_pages`, {
-          method: 'POST',
-          headers: {
-            apikey: SUPABASE_KEY,
-            Authorization: `Bearer ${SUPABASE_KEY}`,
-            'Content-Type': 'application/json',
-            Prefer: 'return=minimal',
-          },
-          body: JSON.stringify(payload),
-        });
-
-        if (!response.ok) {
-          document.getElementById('launch-link').textContent = 'Something went wrong.';
-          return;
+      async function uploadImage(slug) {
+        if (!imageFile) {
+          return imagePreview;
         }
 
-        const liveUrl = `${location.origin}/qr-intake-system/sample/?slug=${slug}`;
+        const extension = imageFile.name.split('.').pop();
+        const filePath = `${slug}-${Date.now()}.${extension}`;
 
-        document.getElementById('launch-link').innerHTML = `<a href="${liveUrl}" target="_blank">${liveUrl}</a>`;
+        const uploadResponse = await fetch(
+          `${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${filePath}`,
+          {
+            method: 'POST',
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization: `Bearer ${SUPABASE_KEY}`,
+              'Content-Type': imageFile.type,
+            },
+            body: imageFile,
+          }
+        );
+
+        if (!uploadResponse.ok) {
+          throw new Error('Image upload failed');
+        }
+
+        return `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${filePath}`;
+      }
+
+      document.getElementById('launch-page').addEventListener('click', async () => {
+        const launchButton = document.getElementById('launch-page');
+        launchButton.disabled = true;
+        launchButton.textContent = 'Launching...';
+
+        try {
+          const vendorName = document.getElementById('vendor-name').textContent.trim();
+          const slug = slugify(vendorName);
+          const imageUrl = await uploadImage(slug);
+
+          const payload = {
+            slug,
+            vendor_name: vendorName,
+            category: document.getElementById('vendor-category').textContent.trim(),
+            product_name: document.getElementById('product-name').textContent.trim(),
+            description: document.getElementById('product-description').textContent.trim(),
+            image_url: imageUrl,
+            cta_text: 'Claim My Free Sample',
+            instagram: socials.instagram || null,
+            facebook: socials.facebook || null,
+            website: socials.website || null,
+            order_link: socials.order || null,
+          };
+
+          const response = await fetch(`${SUPABASE_URL}/rest/v1/vendor_pages`, {
+            method: 'POST',
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization: `Bearer ${SUPABASE_KEY}`,
+              'Content-Type': 'application/json',
+              Prefer: 'return=minimal',
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (!response.ok) {
+            throw new Error('Page save failed');
+          }
+
+          const liveUrl = `${location.origin}/qr-intake-system/sample/?slug=${slug}`;
+
+          document.getElementById('launch-link').innerHTML = `<a href="${liveUrl}" target="_blank">${liveUrl}</a>`;
+        } catch (error) {
+          console.error(error);
+          document.getElementById('launch-link').textContent = 'Something went wrong.';
+        } finally {
+          launchButton.disabled = false;
+          launchButton.textContent = 'Launch My Free Sample';
+        }
       });
     </script>
   </body>
