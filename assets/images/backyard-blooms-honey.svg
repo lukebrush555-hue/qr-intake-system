@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-labelledby="title desc">
+  <title id="title">Wildflower raw honey jar</title>
+  <desc id="desc">A restrained artisan-style honey jar illustration on a warm cream background.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7f2e8"/>
+      <stop offset="1" stop-color="#ebe4d6"/>
+    </linearGradient>
+    <linearGradient id="honey" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d99b31"/>
+      <stop offset="1" stop-color="#a7661d"/>
+    </linearGradient>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="24" stdDeviation="26" flood-color="#322817" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <rect width="900" height="900" fill="url(#bg)"/>
+  <g fill="none" stroke="#cfc2ab" stroke-width="2" opacity="0.45">
+    <path d="M154 280c76-48 142-56 198-24 72 42 121 31 173-32 42-51 104-70 184-58"/>
+    <path d="M206 686c63-42 118-50 165-24 61 34 103 25 147-26 36-41 88-56 156-46"/>
+  </g>
+  <g filter="url(#softShadow)">
+    <path d="M334 282h232l-19 74H353l-19-74Z" fill="#5a6538"/>
+    <rect x="361" y="220" width="178" height="86" rx="16" fill="#73814a"/>
+    <path d="M344 342h212c32 0 57 25 57 57v255c0 50-41 91-91 91H378c-50 0-91-41-91-91V399c0-32 25-57 57-57Z" fill="#f9f3e8" stroke="#d5c8b5" stroke-width="10"/>
+    <path d="M328 435h244v219c0 28-23 51-51 51H379c-28 0-51-23-51-51V435Z" fill="url(#honey)"/>
+    <path d="M356 460c54 24 106 21 156-9 31-19 51-22 60-8v-8H328v20c7-6 16-4 28 5Z" fill="#efbf56" opacity="0.85"/>
+    <rect x="367" y="494" width="166" height="130" rx="10" fill="#f8f2e5" stroke="#ded1bd" stroke-width="4"/>
+    <text x="450" y="548" text-anchor="middle" fill="#26351e" font-family="Georgia, serif" font-size="34" letter-spacing="2">RAW</text>
+    <text x="450" y="587" text-anchor="middle" fill="#9c6822" font-family="Inter, Arial, sans-serif" font-size="20" letter-spacing="5">HONEY</text>
+    <path d="M450 621c28-28 44-52 44-73 0-25-20-44-44-44s-44 19-44 44c0 21 16 45 44 73Z" fill="none" stroke="#6a763f" stroke-width="5" opacity="0.45"/>
+  </g>
+</svg>
