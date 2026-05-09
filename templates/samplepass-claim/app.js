@@ -1,11 +1,18 @@
 (function () {
   const config = window.SAMPLEPASS_DEMO_CONFIG || {};
-  const form = document.querySelector("#samplepass-form");
+
+  const connectState = document.querySelector("#state-connect");
+  const interactState = document.querySelector("#state-interact");
+  const connectedState = document.querySelector("#state-connected");
+
+  const connectForm = document.querySelector("#connect-form");
+  const claimForm = document.querySelector("#samplepass-form");
   const submitButton = document.querySelector("#submit-button");
   const status = document.querySelector("#form-status");
 
   const requiredConfig = ["SUPABASE_URL", "SUPABASE_PUBLISHABLE_KEY"];
   const missingConfig = requiredConfig.filter((key) => !config[key]);
+
   const defaultSubmitLabel = submitButton.textContent.trim();
 
   document.querySelectorAll("[data-config-text]").forEach((element) => {
@@ -32,6 +39,21 @@
     }
   });
 
+  if (config.SOCIAL_LINKS) {
+    document.querySelectorAll("[data-social]").forEach((link) => {
+      const key = link.dataset.social;
+      const value = config.SOCIAL_LINKS[key];
+
+      if (value) {
+        link.href = value;
+        link.target = "_blank";
+        link.rel = "noreferrer";
+      } else {
+        link.remove();
+      }
+    });
+  }
+
   function setStatus(message, type) {
     status.textContent = message;
     status.className = "form-status";
@@ -41,8 +63,13 @@
     }
   }
 
-  function readField(name) {
-    return new FormData(form).get(name).trim();
+  function activateState(targetState) {
+    [connectState, interactState, connectedState].forEach((section) => {
+      section.classList.remove("active-state");
+    });
+
+    targetState.classList.add("active-state");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   async function submitLead(payload) {
@@ -64,49 +91,49 @@
     }
   }
 
-  form.addEventListener("submit", async (event) => {
+  connectForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (!connectForm.checkValidity()) {
+      connectForm.reportValidity();
+      return;
+    }
+
+    localStorage.setItem("ropebridge-connected", "true");
+    activateState(interactState);
+  });
+
+  claimForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     setStatus("", null);
 
     if (missingConfig.length > 0) {
-      setStatus(
-        `Missing Supabase config: ${missingConfig.join(", ")}.`,
-        "error",
-      );
+      setStatus(`Missing Supabase config: ${missingConfig.join(", ")}.`);
       return;
     }
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
-    const notes = readField("notes");
     const payload = {
       project_type: config.PROJECT_TYPE,
       template_id: config.TEMPLATE_ID,
       source_id: config.SOURCE_ID,
       qr_id: config.QR_ID,
-      name: readField("name"),
-      phone: readField("phone"),
-      business_name: readField("business_name"),
+      name: "SamplePass Visitor",
+      phone: localStorage.getItem("ropebridge-phone") || "pending-connect",
+      business_name: config.BRAND_NAME,
       metadata: {
-        free_item: config.FREE_ITEM,
-        notes,
+        product: config.PRODUCT_NAME,
       },
     };
 
     submitButton.disabled = true;
-    submitButton.textContent = "Sending...";
-    setStatus("Sending your request...", null);
+    submitButton.textContent = "Saving...";
 
     try {
       await submitLead(payload);
-      form.reset();
-      setStatus(config.SUCCESS_MESSAGE, "success");
+      activateState(connectedState);
     } catch (error) {
-      setStatus("Something went wrong. Please try again.", "error");
       console.error(error);
+      setStatus("Something went wrong. Please try again.");
     } finally {
       submitButton.disabled = false;
       submitButton.textContent = config.CTA_LABEL || defaultSubmitLabel;
