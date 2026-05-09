@@ -34,7 +34,7 @@
 
             <div class="limit-row">
               <span class="limit-dot"></span>
-              <p>One claim per person, per day.</p>
+              <p id="recognition-copy">One claim per person, per day.</p>
             </div>
           </section>
 
@@ -51,9 +51,56 @@
     <script>
       const SUPABASE_URL = 'https://chqwqnxxggswbsijxnio.supabase.co';
       const SUPABASE_KEY = 'sb_publishable_KY_sTlKcppTc8dlDZjCqaA_2XV6COmP';
+      const STORAGE_KEY = 'ropebridge_identity_token';
 
       const params = new URLSearchParams(window.location.search);
       const slug = params.get('slug');
+
+      let vendorPage = null;
+      let recognizedUser = null;
+
+      function generateToken() {
+        return `rb_${crypto.randomUUID()}`;
+      }
+
+      async function ensureIdentity() {
+        let token = localStorage.getItem(STORAGE_KEY);
+
+        if (!token) {
+          token = generateToken();
+          localStorage.setItem(STORAGE_KEY, token);
+
+          await fetch(`${SUPABASE_URL}/rest/v1/users`, {
+            method: 'POST',
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization: `Bearer ${SUPABASE_KEY}`,
+              'Content-Type': 'application/json',
+              Prefer: 'return=minimal',
+            },
+            body: JSON.stringify({
+              identity_token: token,
+            }),
+          });
+        }
+
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/users?identity_token=eq.${token}&select=*`,
+          {
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization: `Bearer ${SUPABASE_KEY}`,
+            },
+          }
+        );
+
+        const users = await response.json();
+        recognizedUser = users[0] || null;
+
+        if (recognizedUser) {
+          document.getElementById('recognition-copy').textContent = 'Welcome back — your details are already recognized.';
+        }
+      }
 
       async function loadPage() {
         const response = await fetch(
@@ -67,27 +114,27 @@
         );
 
         const data = await response.json();
-        const page = data[0];
+        vendorPage = data[0];
 
-        if (!page) {
+        if (!vendorPage) {
           document.getElementById('vendor-name').textContent = 'Page not found';
           return;
         }
 
-        document.title = `${page.vendor_name} — SamplePass`;
+        document.title = `${vendorPage.vendor_name} — SamplePass`;
 
-        document.getElementById('vendor-name').textContent = page.vendor_name;
-        document.getElementById('vendor-category').textContent = page.category || '';
-        document.getElementById('product-name').textContent = page.product_name;
-        document.getElementById('product-description').textContent = page.description || '';
-        document.getElementById('product-image').src = page.image_url || '../assets/images/backyard-blooms-honey.svg';
-        document.getElementById('cta-button').textContent = page.cta_text || 'Claim My Free Sample';
+        document.getElementById('vendor-name').textContent = vendorPage.vendor_name;
+        document.getElementById('vendor-category').textContent = vendorPage.category || '';
+        document.getElementById('product-name').textContent = vendorPage.product_name;
+        document.getElementById('product-description').textContent = vendorPage.description || '';
+        document.getElementById('product-image').src = vendorPage.image_url || '../assets/images/backyard-blooms-honey.svg';
+        document.getElementById('cta-button').textContent = vendorPage.cta_text || 'Claim My Free Sample';
 
         const socials = [
-          ['Instagram', page.instagram],
-          ['Facebook', page.facebook],
-          ['Website', page.website],
-          ['Order Online', page.order_link],
+          ['Instagram', vendorPage.instagram],
+          ['Facebook', vendorPage.facebook],
+          ['Website', vendorPage.website],
+          ['Order Online', vendorPage.order_link],
         ].filter(([, value]) => value);
 
         if (socials.length) {
@@ -106,7 +153,37 @@
         }
       }
 
-      loadPage();
+      async function recordInteraction() {
+        if (!recognizedUser || !vendorPage) return;
+
+        await fetch(`${SUPABASE_URL}/rest/v1/interactions`, {
+          method: 'POST',
+          headers: {
+            apikey: SUPABASE_KEY,
+            Authorization: `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json',
+            Prefer: 'return=minimal',
+          },
+          body: JSON.stringify({
+            user_id: recognizedUser.id,
+            vendor_page_id: vendorPage.id,
+            interaction_type: 'sample_claim',
+            metadata: {
+              slug,
+            },
+          }),
+        });
+      }
+
+      document.getElementById('cta-button').addEventListener('click', async () => {
+        document.getElementById('cta-button').textContent = 'Saved';
+        await recordInteraction();
+      });
+
+      (async function init() {
+        await ensureIdentity();
+        await loadPage();
+      })();
     </script>
   </body>
 </html>
