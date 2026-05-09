@@ -6,29 +6,17 @@
     <title>Create Your SamplePass Page</title>
     <link rel="stylesheet" href="../templates/samplepass-claim/styles.css" />
     <style>
-      .editable {
-        cursor: text;
-      }
-
+      .editable { cursor: text; }
       [contenteditable="true"]:focus {
         outline: none;
-        background: rgba(181, 122, 43, 0.08);
+        background: rgba(181,122,43,0.08);
         border-radius: 8px;
       }
-
-      .editor-note {
-        margin-top: 10px;
-        text-align: center;
-        color: var(--muted);
-        font-size: 0.95rem;
-      }
-
       .replace-image {
         margin-top: 14px;
         display: flex;
         justify-content: center;
       }
-
       .replace-image label {
         min-height: 44px;
         padding: 0 18px;
@@ -43,33 +31,19 @@
         cursor: pointer;
         background: rgba(255,255,255,0.7);
       }
-
-      .replace-image input {
-        display: none;
-      }
-
-      .social-editor {
-        margin-top: 30px;
-      }
-
-      .social-chip.adding {
-        border-style: dashed;
-      }
-
+      .replace-image input { display: none; }
+      .social-editor { margin-top: 30px; }
+      .social-chip.adding { border-style: dashed; }
       .social-modal {
         position: fixed;
         inset: 0;
-        background: rgba(26, 30, 24, 0.28);
+        background: rgba(26,30,24,0.28);
         display: none;
         align-items: center;
         justify-content: center;
         padding: 24px;
       }
-
-      .social-modal.active {
-        display: flex;
-      }
-
+      .social-modal.active { display: flex; }
       .social-modal-card {
         width: 100%;
         max-width: 340px;
@@ -77,57 +51,36 @@
         border-radius: 22px;
         padding: 24px;
       }
-
       .social-modal-card h3 {
         margin: 0;
         font-family: Georgia, serif;
         font-size: 1.8rem;
       }
-
-      .social-modal-card input {
-        margin-top: 18px;
-      }
-
-      .launch-button {
-        margin-top: 36px;
-      }
-
+      .social-modal-card input { margin-top: 18px; }
+      .launch-button { margin-top: 36px; }
       .launch-link {
         margin-top: 18px;
         text-align: center;
         word-break: break-word;
       }
-
-      .launch-link a {
-        color: var(--olive-dark);
-      }
+      .launch-link a { color: var(--olive-dark); }
     </style>
   </head>
   <body>
     <main class="page-shell">
       <section class="phone-frame">
         <section class="screen-state active-state">
-          <div class="seal-button" aria-hidden="true">
+          <div class="seal-button">
             <span class="seal-inner">RB</span>
           </div>
 
           <header class="vendor-header">
-            <h1 id="vendor-name" class="vendor-name editable" contenteditable="true">
-              Backyard Blooms
-            </h1>
-
-            <p id="vendor-category" class="vendor-category editable" contenteditable="true">
-              Raw Honey
-            </p>
+            <h1 id="vendor-name" class="vendor-name editable" contenteditable="true">Backyard Blooms</h1>
+            <p id="vendor-category" class="vendor-category editable" contenteditable="true">Raw Honey</p>
           </header>
 
           <div class="product-image-wrap">
-            <img
-              id="product-image"
-              class="product-image"
-              src="../assets/images/backyard-blooms-honey.svg"
-              alt="Product image"
-            />
+            <img id="product-image" class="product-image" src="../assets/images/backyard-blooms-honey.svg" alt="Product image" />
           </div>
 
           <div class="replace-image">
@@ -138,12 +91,8 @@
           </div>
 
           <section class="product-copy">
-            <h2 id="product-name" class="product-name editable" contenteditable="true">
-              Wildflower Raw Honey
-            </h2>
-
+            <h2 id="product-name" class="product-name editable" contenteditable="true">Wildflower Raw Honey</h2>
             <div class="accent-line"></div>
-
             <p id="product-description" class="product-description editable" contenteditable="true">
               Made locally in small seasonal batches using wildflower nectar gathered throughout the Saucon Valley region.
             </p>
@@ -151,23 +100,11 @@
 
           <section class="social-editor">
             <p class="social-heading">Stay Connected</p>
-
             <div class="social-grid">
-              <button class="social-chip adding" data-platform="instagram">
-                + Instagram
-              </button>
-
-              <button class="social-chip adding" data-platform="facebook">
-                + Facebook
-              </button>
-
-              <button class="social-chip adding" data-platform="website">
-                + Website
-              </button>
-
-              <button class="social-chip adding" data-platform="order">
-                + Order Online
-              </button>
+              <button class="social-chip adding" data-platform="instagram">+ Instagram</button>
+              <button class="social-chip adding" data-platform="facebook">+ Facebook</button>
+              <button class="social-chip adding" data-platform="website">+ Website</button>
+              <button class="social-chip adding" data-platform="order">+ Order Online</button>
             </div>
           </section>
 
@@ -188,14 +125,18 @@
     <div id="social-modal" class="social-modal">
       <div class="social-modal-card">
         <h3 id="modal-title">Instagram</h3>
-        <input id="social-input" type="text" placeholder="username" />
+        <input id="social-input" type="text" placeholder="username or URL" />
         <button id="save-social" style="margin-top:18px;width:100%;">Save</button>
       </div>
     </div>
 
     <script>
+      const SUPABASE_URL = 'https://chqwqnxxggswbsijxnio.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_KY_sTlKcppTc8dlDZjCqaA_2XV6COmP';
+
       const socials = {};
       let activePlatform = null;
+      let imageData = '../assets/images/backyard-blooms-honey.svg';
 
       const modal = document.getElementById('social-modal');
       const modalTitle = document.getElementById('modal-title');
@@ -225,29 +166,63 @@
 
       document.getElementById('image-upload').addEventListener('change', (event) => {
         const file = event.target.files[0];
-
         if (!file) return;
 
         const reader = new FileReader();
 
         reader.onload = (e) => {
-          document.getElementById('product-image').src = e.target.result;
+          imageData = e.target.result;
+          document.getElementById('product-image').src = imageData;
         };
 
         reader.readAsDataURL(file);
       });
 
-      document.getElementById('launch-page').addEventListener('click', () => {
-        const params = new URLSearchParams({
-          brand: document.getElementById('vendor-name').textContent.trim(),
+      function slugify(value) {
+        return value
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-|-$/g, '');
+      }
+
+      document.getElementById('launch-page').addEventListener('click', async () => {
+        const vendorName = document.getElementById('vendor-name').textContent.trim();
+        const slug = slugify(vendorName);
+
+        const payload = {
+          slug,
+          vendor_name: vendorName,
           category: document.getElementById('vendor-category').textContent.trim(),
-          product: document.getElementById('product-name').textContent.trim(),
+          product_name: document.getElementById('product-name').textContent.trim(),
           description: document.getElementById('product-description').textContent.trim(),
+          image_url: imageData,
+          cta_text: 'Claim My Free Sample',
+          instagram: socials.instagram || null,
+          facebook: socials.facebook || null,
+          website: socials.website || null,
+          order_link: socials.order || null,
+        };
+
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/vendor_pages`, {
+          method: 'POST',
+          headers: {
+            apikey: SUPABASE_KEY,
+            Authorization: `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json',
+            Prefer: 'return=minimal',
+          },
+          body: JSON.stringify(payload),
         });
 
-        const url = `${location.origin}/qr-intake-system/templates/samplepass-claim/?${params.toString()}`;
+        if (!response.ok) {
+          document.getElementById('launch-link').textContent = 'Something went wrong.';
+          return;
+        }
 
-        document.getElementById('launch-link').innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
+        const liveUrl = `${location.origin}/qr-intake-system/sample/?slug=${slug}`;
+
+        document.getElementById('launch-link').innerHTML = `<a href="${liveUrl}" target="_blank">${liveUrl}</a>`;
       });
     </script>
   </body>
