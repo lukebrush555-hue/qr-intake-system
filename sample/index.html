@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SamplePass</title>
+    <link rel="stylesheet" href="../templates/samplepass-claim/styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="phone-frame">
+        <section class="screen-state active-state">
+          <div class="seal-button">
+            <span class="seal-inner">RB</span>
+          </div>
+
+          <header class="vendor-header">
+            <h1 id="vendor-name" class="vendor-name">Loading...</h1>
+            <p id="vendor-category" class="vendor-category"></p>
+          </header>
+
+          <div class="product-image-wrap">
+            <img id="product-image" class="product-image" />
+          </div>
+
+          <section class="product-copy">
+            <h2 id="product-name" class="product-name"></h2>
+            <div class="accent-line"></div>
+            <p id="product-description" class="product-description"></p>
+          </section>
+
+          <section class="claim-form">
+            <button id="cta-button">Claim My Free Sample</button>
+
+            <div class="limit-row">
+              <span class="limit-dot"></span>
+              <p>One claim per person, per day.</p>
+            </div>
+          </section>
+
+          <section id="social-section" class="social-section"></section>
+
+          <footer class="powered-footer">
+            <span class="powered-seal">RB</span>
+            <span>Powered by RopeBridge</span>
+          </footer>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      const SUPABASE_URL = 'https://chqwqnxxggswbsijxnio.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_KY_sTlKcppTc8dlDZjCqaA_2XV6COmP';
+
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('slug');
+
+      async function loadPage() {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/vendor_pages?slug=eq.${slug}&select=*`,
+          {
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization: `Bearer ${SUPABASE_KEY}`,
+            },
+          }
+        );
+
+        const data = await response.json();
+        const page = data[0];
+
+        if (!page) {
+          document.getElementById('vendor-name').textContent = 'Page not found';
+          return;
+        }
+
+        document.title = `${page.vendor_name} — SamplePass`;
+
+        document.getElementById('vendor-name').textContent = page.vendor_name;
+        document.getElementById('vendor-category').textContent = page.category || '';
+        document.getElementById('product-name').textContent = page.product_name;
+        document.getElementById('product-description').textContent = page.description || '';
+        document.getElementById('product-image').src = page.image_url || '../assets/images/backyard-blooms-honey.svg';
+        document.getElementById('cta-button').textContent = page.cta_text || 'Claim My Free Sample';
+
+        const socials = [
+          ['Instagram', page.instagram],
+          ['Facebook', page.facebook],
+          ['Website', page.website],
+          ['Order Online', page.order_link],
+        ].filter(([, value]) => value);
+
+        if (socials.length) {
+          const section = document.getElementById('social-section');
+
+          section.innerHTML = `
+            <p class="social-heading">Stay Connected</p>
+            <div class="social-grid">
+              ${socials.map(([label, url]) => `
+                <a class="social-chip" href="${url}" target="_blank" rel="noreferrer">
+                  <span>${label}</span>
+                </a>
+              `).join('')}
+            </div>
+          `;
+        }
+      }
+
+      loadPage();
+    </script>
+  </body>
+</html>
