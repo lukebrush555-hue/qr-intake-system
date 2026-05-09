@@ -3,72 +3,194 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SamplePass</title>
+    <title>RopeBridge — SamplePass</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main class="page-shell">
-      <section class="claim-card" aria-labelledby="offer-title">
-        <header class="site-header">
-          <div class="brand-mark" aria-hidden="true">SP</div>
-          <p class="brand-name" data-config-text="BRAND_NAME">SamplePass</p>
-        </header>
-
-        <div class="offer-media">
-          <img
-            src="../../assets/images/samplepass-stand.jpg"
-            alt="Premium tabletop QR/NFC stand"
-            data-config-src="IMAGE_SRC"
-            data-config-alt="FREE_ITEM"
-          />
-        </div>
-
-        <div class="offer-copy">
-          <p class="free-item" data-config-text="FREE_ITEM">Premium tabletop QR/NFC stand</p>
-          <h1 id="offer-title" data-config-text="OFFER_HEADLINE">Get a free handcrafted QR/NFC stand</h1>
-          <p class="subheadline" data-config-text="SUBHEADLINE">
-            Scan, tap, and connect your physical booth or table to a simple
-            digital experience.
-          </p>
-        </div>
-
-        <form id="samplepass-form" class="claim-form" novalidate>
-          <div class="field">
-            <label for="full-name">Full name</label>
-            <input id="full-name" name="name" autocomplete="name" required />
+      <section class="phone-frame">
+        <section id="state-connect" class="screen-state">
+          <div class="seal-button" aria-hidden="true">
+            <span class="seal-inner">RB</span>
           </div>
 
-          <div class="field">
-            <label for="phone">Phone number</label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              autocomplete="tel"
-              required
+          <header class="connect-header">
+            <h1 data-config-text="CONNECT_HEADLINE">
+              Join participating local vendors.
+            </h1>
+            <p class="connect-subheadline" data-config-text="CONNECT_SUBHEADLINE">
+              One sign-in for offers, samples & updates.
+            </p>
+          </header>
+
+          <form id="connect-form" class="connect-form" novalidate>
+            <div class="field-row">
+              <div class="field compact-field">
+                <label for="country-code">Country</label>
+                <select id="country-code" name="country_code">
+                  <option value="+1">United States (+1)</option>
+                </select>
+              </div>
+
+              <div class="field compact-field grow-field">
+                <label for="connect-phone">Phone</label>
+                <input
+                  id="connect-phone"
+                  name="phone"
+                  type="tel"
+                  autocomplete="tel"
+                  placeholder="Phone number"
+                  required
+                />
+              </div>
+            </div>
+
+            <p class="connect-copy" data-config-text="CONNECT_BODY">
+              With your consent, we will send a one-time verification code by text message to confirm your phone number.
+            </p>
+
+            <label class="check-row">
+              <input type="checkbox" required />
+              <span>
+                I consent to receive a one-time verification code via SMS text.
+              </span>
+            </label>
+
+            <label class="check-row">
+              <input type="checkbox" required />
+              <span>
+                I’d like to receive offers, samples, and updates from participating vendors.
+              </span>
+            </label>
+
+            <button id="connect-button" type="submit">Send SMS text code</button>
+          </form>
+        </section>
+
+        <section id="state-interact" class="screen-state active-state">
+          <div class="seal-button" aria-hidden="true">
+            <span class="seal-inner">RB</span>
+          </div>
+
+          <header class="vendor-header">
+            <h1 class="vendor-name" data-config-text="BRAND_NAME">
+              Backyard Blooms
+            </h1>
+            <p class="vendor-category" data-config-text="PRODUCT_CATEGORY">
+              Raw Honey
+            </p>
+          </header>
+
+          <div class="product-image-wrap">
+            <img
+              class="product-image"
+              src="../../assets/images/samplepass-stand.jpg"
+              alt="Wildflower raw honey"
+              data-config-src="IMAGE_SRC"
+              data-config-alt="IMAGE_ALT"
             />
           </div>
 
-          <div class="field">
-            <label for="business-name">Business name</label>
-            <input
-              id="business-name"
-              name="business_name"
-              autocomplete="organization"
-              required
-            />
+          <section class="product-copy">
+            <h2 class="product-name" data-config-text="PRODUCT_NAME">
+              Wildflower Raw Honey
+            </h2>
+
+            <div class="accent-line"></div>
+
+            <p class="product-description" data-config-text="PRODUCT_DESCRIPTION">
+              Made locally in small seasonal batches using wildflower nectar gathered throughout the Saucon Valley region.
+            </p>
+          </section>
+
+          <form id="samplepass-form" class="claim-form" novalidate>
+            <input type="hidden" name="name" value="SamplePass Visitor" />
+            <input type="hidden" name="phone" value="pending-connect" />
+            <input type="hidden" name="business_name" value="Backyard Blooms" />
+            <input type="hidden" name="notes" value="Wildflower Raw Honey" />
+
+            <button id="submit-button" type="submit" data-config-text="CTA_LABEL">
+              Claim My Free Sample
+            </button>
+
+            <div class="limit-row">
+              <span class="limit-dot"></span>
+              <p data-config-text="LIMIT_NOTE">One claim per person, per day.</p>
+            </div>
+
+            <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+          </form>
+
+          <footer class="powered-footer">
+            <span class="powered-seal">RB</span>
+            <span>Powered by RopeBridge</span>
+          </footer>
+        </section>
+
+        <section id="state-connected" class="screen-state">
+          <div class="seal-button" aria-hidden="true">
+            <span class="seal-inner">RB</span>
           </div>
 
-          <div class="field">
-            <label for="notes">Notes <span>optional</span></label>
-            <textarea id="notes" name="notes" rows="4"></textarea>
-          </div>
+          <header class="vendor-header connected-header">
+            <h1 class="vendor-name" data-config-text="BRAND_NAME">
+              Backyard Blooms
+            </h1>
+            <p class="vendor-category" data-config-text="PRODUCT_CATEGORY">
+              Raw Honey
+            </p>
+          </header>
 
-          <button id="submit-button" type="submit" data-config-text="CTA_LABEL">
-            Claim My Free Stand
-          </button>
-          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-        </form>
+          <section class="connected-card">
+            <h2 data-config-text="CONNECTED_HEADLINE">
+              Thanks for stopping by!
+            </h2>
+
+            <p data-config-text="CONNECTED_BODY">
+              We’re glad you’re part of our hive. Scan again anytime to find us, order, or stay in touch.
+            </p>
+          </section>
+
+          <section class="social-section">
+            <p class="social-heading">Stay Connected</p>
+
+            <div class="social-grid">
+              <a class="social-chip" data-social="instagram" href="#">
+                <span>Instagram</span>
+              </a>
+
+              <a class="social-chip" data-social="facebook" href="#">
+                <span>Facebook</span>
+              </a>
+
+              <a class="social-chip" data-social="website" href="#">
+                <span>Website</span>
+              </a>
+
+              <a class="social-chip" data-social="order" href="#">
+                <span>Order Online</span>
+              </a>
+            </div>
+          </section>
+
+          <section class="connected-note-card">
+            <p class="connected-note" data-config-text="CONNECTED_NOTE">
+              Local honey. Real people. Great to see you!
+            </p>
+
+            <div class="saved-row">
+              <span class="saved-lock">•</span>
+              <span data-config-text="SAVED_NOTE">
+                Your details are saved for next time.
+              </span>
+            </div>
+          </section>
+
+          <footer class="powered-footer">
+            <span class="powered-seal">RB</span>
+            <span>Powered by RopeBridge</span>
+          </footer>
+        </section>
       </section>
     </main>
 
