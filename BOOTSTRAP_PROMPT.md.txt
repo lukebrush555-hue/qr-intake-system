@@ -1,0 +1,268 @@
+# RopeBridge Bootstrap Context
+
+## Project Overview
+RopeBridge is a persistent physical-to-digital interaction system built around QR-driven flows.
+
+Current active archetype:
+- SamplePass
+
+Core philosophy:
+- frictionless participation
+- artisan/local aesthetic
+- persistent recognition continuity
+- editable live destinations
+- sign in once, easier forever
+- bones + config architecture
+
+The product is NOT a QR generator.
+The product is persistent interaction infrastructure.
+
+---
+
+# Current Deployment
+
+## GitHub Repo
+https://github.com/lukebrush555-hue/qr-intake-system
+
+## GitHub Pages Base URL
+https://lukebrush555-hue.github.io/qr-intake-system/
+
+---
+
+# Live Routes
+
+## Vendor Creator
+/create/
+
+Purpose:
+- inline mobile-first editor
+- create vendor pages
+- edit existing pages
+- upload images
+- manage socials
+- launch live pages
+
+Behavior:
+- if slug already exists, update existing page
+- no duplicate vendor pages
+- intended to feel editorial/tactile, NOT dashboard-like
+
+## Dynamic Vendor Pages
+/sample/?slug=vendor-name
+
+Purpose:
+- live customer-facing page
+- persistent destination
+- recognition continuity
+- interaction tracking
+
+---
+
+# Current System State
+
+The following systems are LIVE and functioning:
+
+## Persistent Vendor Pages
+Flow:
+create -> persist -> revisit -> edit -> relaunch
+
+Vendor pages are stored in Supabase.
+
+## Recognition Continuity
+Visitors receive a persistent browser identity token.
+
+Returning visitors are recognized automatically.
+
+Current UX copy:
+"Welcome back — your details are already recognized."
+
+## Interaction Tracking
+Interactions are stored.
+
+Foundation exists for:
+- repeat visitors
+- vendor relationship history
+- future loyalty/rewards
+- cross-vendor continuity
+
+## Real Image Hosting
+Vendor images are uploaded to Supabase Storage.
+
+Images are NOT stored as giant base64 blobs in database rows anymore.
+
+---
+
+# Design System
+
+Approved aesthetic:
+- artisan
+- restrained
+- editorial
+- local/shop-small energy
+- elegant but not luxury-snobby
+- tactile
+- warm neutrals
+- olive green accents
+- subtle gold accents
+
+Avoid:
+- dashboard feel
+- SaaS aesthetic
+- excessive icons
+- aggressive branding
+- loud marketing language
+- rustic kitsch
+- startup gradients
+
+## RopeBridge Mark
+Wax seal utility mark.
+
+Small and discreet.
+
+Used as:
+- subtle top-corner utility icon
+- powered-by footer mark
+
+NEVER dominant branding.
+
+---
+
+# UX Principles
+
+## Creator UX
+The creator should feel like:
+- editing a tasting card
+- arranging signage
+- editing a printed market card
+
+NOT:
+- filling out enterprise software forms
+- configuring dashboards
+
+## Customer UX
+Customer flow must remain:
+- immediate
+- low-friction
+- calm
+- visually clean
+
+No login walls.
+No account creation pressure.
+
+---
+
+# Current Supabase Architecture
+
+## Tables
+
+### vendor_pages
+Stores:
+- vendor_name
+- category
+- product_name
+- description
+- image_url
+- socials
+- slug
+
+### users
+Stores:
+- persistent browser identity token
+- optional future recognition fields
+
+### interactions
+Stores:
+- visitor interactions
+- vendor relationships
+- claim history
+
+## Storage Bucket
+vendor-page-images
+
+Used for uploaded vendor images.
+
+---
+
+# Current Technical Direction
+
+Priority order:
+
+1. frictionless participation
+2. continuity
+3. persistence
+4. elegant simplicity
+5. scalability
+
+NOT priority:
+- dashboards
+- analytics suites
+- enterprise tooling
+- complex auth
+- heavy customization systems
+- overengineering QR generation
+
+Chrome QR generation is currently sufficient.
+
+---
+
+# Important Constraints
+
+DO NOT:
+- add unnecessary dashboards
+- add excessive configuration panels
+- overcomplicate onboarding
+- create enterprise/SaaS-looking interfaces
+- build QR infrastructure prematurely
+- plaster SamplePass branding everywhere
+
+Maintain:
+- subtle branding
+- artisan tone
+- mobile-first interaction
+- tactile/editorial feel
+- persistent continuity systems
+
+---
+
+# Current Known Technical Debt
+
+## Recognition
+Current recognition is browser/device-based only.
+Future versions may incorporate:
+- phone number continuity
+- SMS OTP
+- cross-device recognition
+
+## Security
+Current RLS policies are intentionally permissive for MVP velocity.
+Needs tightening later.
+
+## Slugs
+Current slug system is simplistic.
+No collision handling beyond updating existing pages.
+
+## Image Optimization
+No resizing/compression pipeline yet.
+
+---
+
+# Current Product Insight
+
+The moat is NOT QR generation.
+
+The moat is:
+- continuity
+- persistent relationships
+- editable live destinations
+- recognition
+- friction reduction
+- real-world participation infrastructure
+
+The core loop currently functioning is:
+
+create
+-> persist
+-> recognize
+-> revisit
+-> edit
+-> relaunch
