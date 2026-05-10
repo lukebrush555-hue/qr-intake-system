@@ -25,6 +25,20 @@
 
           <form id="connect-form" class="connect-form" novalidate>
             <div class="field-row">
+              <div class="field compact-field grow-field">
+                <label for="connect-name">First Name</label>
+                <input
+                  id="connect-name"
+                  name="name"
+                  type="text"
+                  autocomplete="given-name"
+                  placeholder="First name"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="field-row">
               <div class="field compact-field">
                 <label for="country-code">Country</label>
                 <select id="country-code" name="country_code">
