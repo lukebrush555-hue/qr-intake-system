@@ -10,6 +10,11 @@
     <main class="page-shell">
       <section class="phone-frame">
         <section id="state-connect" class="screen-state">
+          <div class="powered-top">
+            <span class="mini-mark" aria-hidden="true"></span>
+            <span>Powered by RopeBridge</span>
+          </div>
+
           <div class="seal-button" aria-hidden="true">
             <span class="seal-inner">RB</span>
           </div>
@@ -23,7 +28,16 @@
             </p>
           </header>
 
+          <div class="ornament-line" aria-hidden="true"><span></span></div>
+
           <form id="connect-form" class="connect-form" novalidate>
+            <div class="connect-intro">
+              <h2>Enter your mobile phone number.</h2>
+              <p data-config-text="CONNECT_BODY">
+                With your consent, we will send a one-time verification code by text message to confirm your phone number.
+              </p>
+            </div>
+
             <div class="field-row">
               <div class="field compact-field">
                 <label for="country-code">Country</label>
@@ -45,30 +59,32 @@
               </div>
             </div>
 
-            <p class="connect-copy" data-config-text="CONNECT_BODY">
-              With your consent, we will send a one-time verification code by text message to confirm your phone number.
-            </p>
-
             <label class="check-row">
               <input type="checkbox" required />
               <span>
-                I consent to receive a one-time verification code via SMS text.
+                I consent to receive a one-time verification code via SMS text message. Message and data rates may apply.
               </span>
             </label>
 
             <label class="check-row">
               <input type="checkbox" required />
               <span>
-                I’d like to receive offers, samples, and updates from participating vendors.
+                I understand that signing up once lets me participate with other participating vendors at Saucon Valley Farmers Market. I’d like to receive offers, samples, and updates from participating vendors through RopeBridge.
               </span>
             </label>
 
             <button id="connect-button" type="submit">Send SMS text code</button>
           </form>
+
+          <footer class="powered-footer">
+            <span class="footer-line"></span>
+            <span>Powered by RopeBridge</span>
+            <span class="footer-line"></span>
+          </footer>
         </section>
 
         <section id="state-interact" class="screen-state active-state">
-          <div class="seal-button" aria-hidden="true">
+          <div class="seal-button corner-seal" aria-hidden="true">
             <span class="seal-inner">RB</span>
           </div>
 
@@ -122,13 +138,13 @@
           </form>
 
           <footer class="powered-footer">
-            <span class="powered-seal">RB</span>
+            <span class="mini-mark" aria-hidden="true"></span>
             <span>Powered by RopeBridge</span>
           </footer>
         </section>
 
         <section id="state-connected" class="screen-state">
-          <div class="seal-button" aria-hidden="true">
+          <div class="seal-button corner-seal" aria-hidden="true">
             <span class="seal-inner">RB</span>
           </div>
 
@@ -136,15 +152,16 @@
             <h1 class="vendor-name" data-config-text="BRAND_NAME">
               Backyard Blooms
             </h1>
-            <p class="vendor-category" data-config-text="PRODUCT_CATEGORY">
-              Raw Honey
-            </p>
+            <p class="vendor-category"><span data-config-text="PRODUCT_CATEGORY">Raw Honey</span> <span class="heart">♥</span></p>
           </header>
 
           <section class="connected-card">
+            <div class="flower-ghost" aria-hidden="true"></div>
             <h2 data-config-text="CONNECTED_HEADLINE">
               Thanks for stopping by!
             </h2>
+
+            <div class="accent-line centered"></div>
 
             <p data-config-text="CONNECTED_BODY">
               We’re glad you’re part of our hive. Scan again anytime to find us, order, or stay in touch.
@@ -174,12 +191,13 @@
           </section>
 
           <section class="connected-note-card">
+            <div class="flower-ghost small" aria-hidden="true"></div>
             <p class="connected-note" data-config-text="CONNECTED_NOTE">
               Local honey. Real people. Great to see you!
             </p>
 
             <div class="saved-row">
-              <span class="saved-lock">•</span>
+              <span class="saved-lock">▣</span>
               <span data-config-text="SAVED_NOTE">
                 Your details are saved for next time.
               </span>
@@ -187,8 +205,10 @@
           </section>
 
           <footer class="powered-footer">
-            <span class="powered-seal">RB</span>
+            <span class="footer-line"></span>
+            <span class="mini-mark" aria-hidden="true"></span>
             <span>Powered by RopeBridge</span>
+            <span class="footer-line"></span>
           </footer>
         </section>
       </section>
