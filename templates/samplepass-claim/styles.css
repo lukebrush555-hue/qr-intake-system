@@ -6,8 +6,8 @@
   --ink: #1f3024;
   --muted: #6f726a;
   --line: #ddd6cb;
-  --olive: #566534;
-  --olive-dark: #33401f;
+  --olive: #59683a;
+  --olive-dark: #344220;
   --gold: #b57a2b;
   --shadow: 0 24px 60px rgba(26, 30, 24, 0.08);
 }
@@ -38,7 +38,7 @@ select {
 .page-shell {
   width: 100%;
   min-height: 100vh;
-  padding: 24px 16px;
+  padding: 24px 18px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -46,10 +46,10 @@ select {
 
 .phone-frame {
   width: 100%;
-  max-width: 420px;
+  max-width: 460px;
   background: var(--surface);
-  border: 1px solid rgba(86, 101, 52, 0.08);
-  border-radius: 28px;
+  border: 1px solid rgba(86, 101, 52, 0.06);
+  border-radius: 30px;
   box-shadow: var(--shadow);
   overflow: hidden;
   position: relative;
@@ -57,7 +57,7 @@ select {
 
 .screen-state {
   display: none;
-  padding: 28px;
+  padding: 34px 30px 28px;
   position: relative;
 }
 
@@ -67,34 +67,34 @@ select {
 
 .seal-button {
   position: absolute;
-  top: 22px;
-  right: 22px;
-  width: 58px;
-  height: 58px;
+  top: 18px;
+  right: 18px;
+  width: 52px;
+  height: 52px;
   border-radius: 999px;
   background: radial-gradient(circle at 30% 30%, #6b7b43 0%, #4d5c30 65%, #36431f 100%);
   display: grid;
   place-items: center;
-  box-shadow: 0 8px 18px rgba(51, 64, 31, 0.24);
+  box-shadow: 0 8px 18px rgba(51, 64, 31, 0.18);
 }
 
 .seal-inner {
-  width: 42px;
-  height: 42px;
-  border: 1px solid rgba(233, 222, 189, 0.55);
+  width: 37px;
+  height: 37px;
+  border: 1px solid rgba(233, 222, 189, 0.45);
   border-radius: 999px;
   display: grid;
   place-items: center;
   color: #e9debd;
   font-family: Georgia, serif;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   letter-spacing: 0.08em;
 }
 
 .vendor-header,
 .connect-header {
   text-align: center;
-  padding-top: 22px;
+  padding-top: 18px;
 }
 
 .vendor-name,
@@ -102,30 +102,31 @@ select {
   margin: 0;
   color: var(--ink);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2.5rem, 8vw, 3.6rem);
-  line-height: 0.95;
-  letter-spacing: 0.04em;
+  font-size: clamp(3.2rem, 10vw, 4.5rem);
+  line-height: 0.92;
+  letter-spacing: 0.025em;
   text-transform: uppercase;
+  font-weight: 500;
 }
 
 .vendor-category,
 .connect-subheadline {
-  margin: 18px 0 0;
+  margin: 22px 0 0;
   color: var(--gold);
-  font-size: 1rem;
-  letter-spacing: 0.34em;
+  font-size: 0.88rem;
+  letter-spacing: 0.42em;
   text-transform: uppercase;
 }
 
 .connect-form {
-  margin-top: 36px;
+  margin-top: 46px;
   display: grid;
-  gap: 18px;
+  gap: 22px;
 }
 
 .field-row {
   display: flex;
-  gap: 12px;
+  gap: 14px;
 }
 
 .field {
@@ -143,58 +144,59 @@ select {
 
 label {
   color: var(--olive-dark);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 input,
 select {
   width: 100%;
-  min-height: 54px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: rgba(255,255,255,0.8);
-  padding: 0 16px;
+  min-height: 58px;
+  border: 1px solid rgba(221,214,203,0.8);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.78);
+  padding: 0 18px;
   color: var(--ink);
 }
 
 .connect-copy {
   margin: 0;
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 .check-row {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   align-items: flex-start;
   color: var(--muted);
-  line-height: 1.55;
+  line-height: 1.7;
 }
 
 .check-row input {
   width: 18px;
   height: 18px;
   min-height: 18px;
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
 button {
-  min-height: 58px;
+  min-height: 68px;
   border: 0;
-  border-radius: 16px;
-  background: linear-gradient(90deg, var(--olive-dark) 0%, var(--olive) 100%);
+  border-radius: 14px;
+  background: linear-gradient(90deg, #3d4d22 0%, #677c3b 100%);
   color: #fff;
   font-family: Georgia, serif;
-  font-size: 1.2rem;
+  font-size: 1.55rem;
+  letter-spacing: -0.02em;
   cursor: pointer;
 }
 
 .product-image-wrap {
-  margin-top: 28px;
-  border-radius: 18px;
+  margin-top: 42px;
+  border-radius: 14px;
   overflow: hidden;
 }
 
@@ -204,69 +206,90 @@ button {
 }
 
 .product-copy {
-  margin-top: 26px;
+  margin-top: 40px;
 }
 
 .product-name {
   margin: 0;
   color: var(--ink);
   font-family: Georgia, serif;
-  font-size: clamp(2.2rem, 8vw, 3.4rem);
-  line-height: 1;
+  font-size: clamp(3.3rem, 10vw, 4.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 400;
 }
 
 .accent-line {
-  width: 70px;
+  width: 72px;
   height: 2px;
   background: var(--gold);
-  margin: 22px 0;
+  margin: 30px 0 28px;
 }
 
 .product-description {
   margin: 0;
   color: #434840;
-  font-size: 1.15rem;
-  line-height: 1.7;
+  font-size: 1.24rem;
+  line-height: 1.82;
 }
 
 .claim-form {
-  margin-top: 32px;
+  margin-top: 42px;
+}
+
+.claim-form button {
+  width: 92%;
+  margin: 0 auto;
+  display: block;
 }
 
 .limit-row {
-  margin-top: 26px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line);
-  display: flex;
-  flex-direction: column;
+  margin-top: 38px;
+  display: grid;
+  grid-template-columns: 1fr 12px 1fr;
   align-items: center;
   gap: 12px;
   color: var(--muted);
 }
 
+.limit-row::before,
+.limit-row::after {
+  content: "";
+  height: 1px;
+  background: rgba(221,214,203,0.9);
+}
+
 .limit-dot {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 999px;
   background: var(--olive);
 }
 
+.limit-row p {
+  grid-column: 1 / -1;
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 0.92rem;
+}
+
 .powered-footer {
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid rgba(221, 214, 203, 0.6);
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(221, 214, 203, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  color: #8b8478;
+  gap: 14px;
+  color: #9b9388;
   font-family: Georgia, serif;
+  font-size: 1.05rem;
 }
 
 .powered-seal {
-  width: 28px;
-  height: 28px;
-  border: 1px solid rgba(139, 132, 120, 0.5);
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(139, 132, 120, 0.42);
   border-radius: 999px;
   display: grid;
   place-items: center;
@@ -275,8 +298,8 @@ button {
 
 .connected-card,
 .connected-note-card {
-  margin-top: 34px;
-  padding: 32px 24px;
+  margin-top: 44px;
+  padding: 42px 28px;
   background: var(--surface-soft);
   border-radius: 20px;
   text-align: center;
@@ -285,60 +308,60 @@ button {
 .connected-card h2 {
   margin: 0;
   font-family: Georgia, serif;
-  font-size: 3rem;
-  line-height: 1;
+  font-size: 3.4rem;
+  line-height: 1.05;
 }
 
 .connected-card p {
-  margin: 24px 0 0;
+  margin: 28px 0 0;
   color: #434840;
   font-size: 1.2rem;
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 .social-section {
-  margin-top: 36px;
+  margin-top: 48px;
 }
 
 .social-heading {
-  margin: 0 0 18px;
+  margin: 0 0 24px;
   text-align: center;
   color: var(--gold);
-  letter-spacing: 0.28em;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 700;
 }
 
 .social-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
 }
 
 .social-chip {
-  min-height: 58px;
-  border: 1px solid var(--line);
+  min-height: 62px;
+  border: 1px solid rgba(221,214,203,0.8);
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   color: var(--olive-dark);
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.72);
 }
 
 .connected-note {
   margin: 0;
   font-family: Georgia, serif;
-  font-size: 2rem;
-  line-height: 1.3;
+  font-size: 2.2rem;
+  line-height: 1.35;
 }
 
 .saved-row {
-  margin-top: 28px;
-  padding-top: 18px;
-  border-top: 1px solid var(--line);
+  margin-top: 34px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(221,214,203,0.9);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -358,15 +381,15 @@ button {
 
 @media (max-width: 420px) {
   .screen-state {
-    padding: 22px;
+    padding: 30px 28px 24px;
   }
 
   .vendor-name,
   .connect-header h1 {
-    font-size: 2.7rem;
+    font-size: 3.1rem;
   }
 
-  .connected-card h2 {
-    font-size: 2.3rem;
+  .product-name {
+    font-size: 3.1rem;
   }
 }
