@@ -30,7 +30,7 @@ button, input, select { font: inherit; }
 .page-shell {
   width: 100%;
   min-height: 100vh;
-  padding: 14px 0;
+  padding: 10px 0 20px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -40,16 +40,16 @@ button, input, select { font: inherit; }
   width: 430px;
   max-width: 430px;
   background: var(--surface);
-  border: 1px solid rgba(86, 101, 52, 0.04);
-  border-radius: 32px;
-  box-shadow: 0 28px 70px rgba(26, 30, 24, 0.08);
+  border: 1px solid rgba(86, 101, 52, 0.035);
+  border-radius: 34px;
+  box-shadow: 0 34px 86px rgba(26, 30, 24, 0.08);
   overflow: hidden;
   position: relative;
 }
 
 .screen-state {
   display: none;
-  padding: 44px 32px 40px;
+  padding: 48px 34px 48px;
   position: relative;
 }
 
@@ -57,10 +57,10 @@ button, input, select { font: inherit; }
 
 .seal-button {
   position: absolute;
-  top: 30px;
-  right: 30px;
-  width: 96px;
-  height: 96px;
+  top: 32px;
+  right: 32px;
+  width: 100px;
+  height: 100px;
   border-radius: 42% 54% 46% 58% / 54% 42% 58% 46%;
   background:
     radial-gradient(circle at 34% 26%, rgba(255,255,255,0.24), rgba(255,255,255,0) 28%),
@@ -68,69 +68,69 @@ button, input, select { font: inherit; }
   display: grid;
   place-items: center;
   box-shadow:
-    0 18px 38px rgba(51, 64, 31, 0.24),
+    0 22px 42px rgba(51, 64, 31, 0.22),
     inset 0 6px 10px rgba(255,255,255,0.14),
     inset 0 -10px 16px rgba(0,0,0,0.18);
 }
 
 .seal-inner {
-  width: 66px;
-  height: 66px;
-  border: 1px solid rgba(233, 222, 189, 0.38);
+  width: 68px;
+  height: 68px;
+  border: 1px solid rgba(233, 222, 189, 0.34);
   border-radius: 999px;
   display: grid;
   place-items: center;
   color: #e9debd;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   letter-spacing: 0.08em;
 }
 
 .vendor-header,
 .connect-header {
   text-align: center;
-  padding-top: 58px;
+  padding-top: 66px;
 }
 
 .vendor-name,
 .connect-header h1 {
   margin: 0 auto;
-  width: 320px;
+  width: 316px;
   color: var(--ink);
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 5rem;
-  line-height: 0.82;
-  letter-spacing: 0.025em;
+  font-size: 5.2rem;
+  line-height: 0.78;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   font-weight: 500;
 }
 
 .vendor-category,
 .connect-subheadline {
-  margin: 32px 0 0;
+  margin: 38px 0 0;
   color: var(--gold);
-  font-size: 0.8rem;
-  letter-spacing: 0.6em;
+  font-size: 0.76rem;
+  letter-spacing: 0.68em;
   text-transform: uppercase;
 }
 
 button {
-  min-height: 86px;
+  min-height: 88px;
   border: 0;
   border-radius: 8px;
   background: linear-gradient(90deg, #435425 0%, #65783d 100%);
   color: #fff;
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 2.28rem;
-  letter-spacing: -0.035em;
+  font-size: 2.34rem;
+  letter-spacing: -0.04em;
   cursor: pointer;
   box-shadow:
-    0 16px 32px rgba(52, 66, 32, 0.2),
+    0 18px 36px rgba(52, 66, 32, 0.18),
     inset 0 1px 0 rgba(255,255,255,0.14);
 }
 
 .product-image-wrap {
-  margin-top: 56px;
+  margin-top: 64px;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -141,40 +141,40 @@ button {
   object-fit: cover;
 }
 
-.product-copy { margin-top: 68px; }
+.product-copy { margin-top: 78px; }
 
 .product-name {
   margin: 0;
-  width: 330px;
+  width: 332px;
   color: var(--ink);
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 5.7rem;
-  line-height: 0.84;
-  letter-spacing: -0.06em;
+  font-size: 6rem;
+  line-height: 0.8;
+  letter-spacing: -0.065em;
   font-weight: 500;
 }
 
 .accent-line {
-  width: 76px;
+  width: 80px;
   height: 2px;
   background: var(--gold);
-  margin: 42px 0 36px;
+  margin: 48px 0 40px;
 }
 
 .product-description {
   margin: 0;
-  width: 315px;
+  width: 305px;
   color: #434840;
-  font-size: 1.08rem;
-  line-height: 2;
+  font-size: 1.02rem;
+  line-height: 2.1;
 }
 
 .claim-form {
-  margin-top: 66px;
+  margin-top: 74px;
 }
 
 .claim-form button {
-  width: 326px;
+  width: 330px;
   margin: 0 auto;
   display: block;
 }
