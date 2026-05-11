@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+
 :root {
   color-scheme: light;
   --bg: #efede8;
@@ -76,8 +78,8 @@ button, input, select { font: inherit; }
   display: grid;
   place-items: center;
   color: #e9debd;
-  font-family: Georgia, serif;
-  font-size: 0.72rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
   letter-spacing: 0.08em;
 }
 
@@ -92,20 +94,20 @@ button, input, select { font: inherit; }
   margin: 0 auto;
   max-width: 335px;
   color: var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 3.95rem;
-  line-height: 0.92;
-  letter-spacing: 0.045em;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 4.6rem;
+  line-height: 0.88;
+  letter-spacing: 0.035em;
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .vendor-category,
 .connect-subheadline {
   margin: 28px 0 0;
   color: var(--gold);
-  font-size: 0.94rem;
-  letter-spacing: 0.48em;
+  font-size: 0.88rem;
+  letter-spacing: 0.52em;
   text-transform: uppercase;
 }
 
@@ -162,9 +164,9 @@ button {
   border-radius: 8px;
   background: linear-gradient(90deg, #3e4f25 0%, #5f703a 100%);
   color: #fff;
-  font-family: Georgia, serif;
-  font-size: 1.92rem;
-  letter-spacing: -0.025em;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.15rem;
+  letter-spacing: -0.03em;
   cursor: pointer;
   box-shadow: 0 12px 26px rgba(52, 66, 32, 0.18), inset 0 1px 0 rgba(255,255,255,0.12);
 }
@@ -186,11 +188,11 @@ button {
 .product-name {
   margin: 0;
   color: var(--ink);
-  font-family: Georgia, serif;
-  font-size: 4.35rem;
-  line-height: 0.98;
-  letter-spacing: -0.045em;
-  font-weight: 400;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 5rem;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-weight: 500;
 }
 
 .accent-line {
@@ -203,8 +205,8 @@ button {
 .product-description {
   margin: 0;
   color: #434840;
-  font-size: 1.42rem;
-  line-height: 1.78;
+  font-size: 1.22rem;
+  line-height: 1.9;
 }
 
 .claim-form { margin-top: 54px; }
@@ -254,8 +256,8 @@ button {
   justify-content: center;
   gap: 14px;
   color: #9b9388;
-  font-family: Georgia, serif;
-  font-size: 1.12rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.2rem;
 }
 
 .powered-seal {
@@ -266,97 +268,4 @@ button {
   display: grid;
   place-items: center;
   font-size: 0.7rem;
-}
-
-.connected-card,
-.connected-note-card {
-  margin-top: 44px;
-  padding: 42px 28px;
-  background: var(--surface-soft);
-  border-radius: 20px;
-  text-align: center;
-}
-
-.connected-card h2 {
-  margin: 0;
-  font-family: Georgia, serif;
-  font-size: 3.4rem;
-  line-height: 1.05;
-}
-
-.connected-card p {
-  margin: 28px 0 0;
-  color: #434840;
-  font-size: 1.2rem;
-  line-height: 1.8;
-}
-
-.social-section { margin-top: 48px; }
-
-.social-heading {
-  margin: 0 0 24px;
-  text-align: center;
-  color: var(--gold);
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  font-size: 0.88rem;
-  font-weight: 700;
-}
-
-.social-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.social-chip {
-  min-height: 62px;
-  border: 1px solid rgba(221,214,203,0.8);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: var(--olive-dark);
-  background: rgba(255,255,255,0.72);
-}
-
-.connected-note {
-  margin: 0;
-  font-family: Georgia, serif;
-  font-size: 2.2rem;
-  line-height: 1.35;
-}
-
-.saved-row {
-  margin-top: 34px;
-  padding-top: 22px;
-  border-top: 1px solid rgba(221,214,203,0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  color: var(--muted);
-}
-
-.saved-lock { color: var(--olive); }
-.form-status { margin-top: 14px; text-align: center; color: var(--muted); }
-
-@media (max-width: 420px) {
-  .page-shell { padding: 0; }
-  .phone-frame { max-width: 420px; border-radius: 0; }
-  .screen-state { padding: 34px 32px 30px; }
-  .seal-button { top: 32px; right: 32px; width: 78px; height: 78px; }
-  .seal-inner { width: 52px; height: 52px; }
-  .vendor-header,
-  .connect-header { padding-top: 18px; }
-  .vendor-name,
-  .connect-header h1 { font-size: 3.45rem; max-width: 300px; }
-  .vendor-category,
-  .connect-subheadline { margin-top: 24px; font-size: 0.78rem; }
-  .product-image-wrap { margin-top: 46px; }
-  .product-copy { margin-top: 54px; }
-  .product-name { font-size: 3.85rem; }
-  .product-description { font-size: 1.22rem; }
-  .claim-form button { width: 84%; min-height: 78px; font-size: 1.58rem; }
 }
