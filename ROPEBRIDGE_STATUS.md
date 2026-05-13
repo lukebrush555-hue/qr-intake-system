@@ -4,11 +4,9 @@ _Last updated: 2026-05-13_
 
 ## Project Identity
 
-RopeBridge is currently represented in this repository as `qr-intake-system`: a reusable, QR-driven intake foundation for turning small physical-world prompts into simple digital landing pages.
+RopeBridge is reusable infrastructure for physical-to-digital interactions.
 
-The core philosophy is **bones + config**: the template is the reusable product surface, while each campaign/vendor/page should mostly be expressed as configuration and assets. The browser-facing experience should stay small, mobile-first, QR-first, and security-conscious.
-
-RopeBridge is not a generic SaaS dashboard, CMS, ecommerce app, or pile of unrelated landing pages. It is infrastructure for physical-to-digital interactions:
+The operating model is:
 
 ```txt
 physical encounter
@@ -18,286 +16,295 @@ physical encounter
 → persistent relationship continuity
 ```
 
-The current archetype focus is **SamplePass**.
+The core philosophy remains **bones + config**:
+
+- reusable structures over one-off pages
+- campaign/vendor differences expressed through config and assets
+- mobile-first and QR-first
+- friction once
+- recognition continuity
+- browser remains untrusted
+- implementation simplicity over premature abstraction
+
+RopeBridge should not become a generic SaaS dashboard, CMS, ecommerce app, or pile of unrelated landing pages.
+
+Current archetype focus: **SamplePass**.
 
 ---
 
-## Current Safe Work Branch
+## Current Repository / Deployment
 
-A non-destructive design-system implementation is currently in progress on:
-
-```txt
-design-system-v1
-```
-
-Draft PR:
+Repository:
 
 ```txt
-https://github.com/lukebrush555-hue/qr-intake-system/pull/2
+lukebrush555-hue/qr-intake-system
 ```
 
-PR title:
+GitHub Pages test route:
 
 ```txt
-Add RopeBridge design system v1 as parallel SamplePass route
+https://lukebrush555-hue.github.io/qr-intake-system/templates/samplepass-v1/
 ```
 
-Important: this branch was intentionally created as a **parallel layer**, not a replacement. The original SamplePass route and config remain untouched.
+Current primary working route:
 
----
+```txt
+templates/samplepass-v1/
+```
 
-## Current Architecture
-
-- Frontend stack: plain static HTML, CSS, and JavaScript.
-- No framework, bundler, package manager, or build step.
-- Backend/services: Supabase PostgREST is used directly from browser JavaScript for insert-only lead capture.
-- Deployment method: static hosting from the repository root, documented for GitHub Pages and Vercel.
-- Browser remains untrusted.
-- Supabase service-role keys must never be exposed in frontend code.
-- RLS remains the core database safety boundary.
-
----
-
-## Current Routes
-
-### Existing/live route
+Legacy/original route preserved:
 
 ```txt
 templates/samplepass-claim/
 ```
 
-This is the existing SamplePass implementation. Do not casually overwrite it.
+Important browser gotcha discovered:
 
-### New opt-in design-system route
-
-```txt
-templates/samplepass-v1/
-```
-
-This route was added on the `design-system-v1` branch as a safe test lane for RopeBridge Design System v1.
-
-Purpose:
-
-- test the new design system without disturbing the original page
-- create a reusable visual layer for future RopeBridge archetypes
-- preserve the 3-state Connect → Interact → Connected product model
+- Chrome Android “Desktop site” mode makes the mobile page appear tiny.
+- If mobile rendering looks shrunken in Chrome but correct in Firefox, check Chrome menu → Desktop site and turn it off.
+- This was not a CSS/layout failure after the later fixes.
 
 ---
 
-## Repository Structure
+## Current Implementation State
 
-Key existing files:
+The earlier `design-system-v1` branch / PR was merged into `main`.
 
-- `README.md`: setup, deployment, Supabase, security, and testing instructions.
-- `PROJECT_CONTEXT.md`: product philosophy and project boundaries.
-- `AGENTS.md`: operating rules for future Codex/AI work.
-- `ROPEBRIDGE_STATUS.md`: this new-chat handoff/status file.
-- `.env.example`: local example values for `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`.
-- `configs/samplepass-demo.js`: existing SamplePass config.
-- `templates/samplepass-claim/index.html`: existing SamplePass markup.
-- `templates/samplepass-claim/app.js`: existing SamplePass behavior.
-- `templates/samplepass-claim/styles.css`: existing SamplePass styling.
-- `assets/images/samplepass-stand.jpg`: current offer image.
-- `supabase/schema.sql`: current Supabase schema and RLS grants/policy.
-- `supabase/migrations/202605060001_init_lead_requests.sql`: migration matching `schema.sql`.
-- `.github/workflows/ci.yml`: minimal CI that validates JSON and checks JavaScript syntax.
+`templates/samplepass-v1/` now exists on `main` as the active design-system test route.
 
-New files added on `design-system-v1`:
+Recent high-level changes made on `main`:
+
+- added shared RopeBridge CSS design-system files
+- added SamplePass v1 route
+- added localStorage recognition flow
+- fixed mobile layout by removing fragile viewport/grid centering behavior
+- forced cream/olive/brass palette instead of respecting device dark mode
+- simplified active SamplePass visual hierarchy
+- removed top vendor text from the active interact screen
+- removed `SAMPLEPASS` eyebrow from the active offer card
+- removed `powered by RopeBridge` text from the active flow
+- centered the seal/logo as the only brand mark above the recognition message
+- added `assets/images/ropebridge-seal.svg` as a repo-native seal asset
+- reworked `Welcome back, Luke.` into a quiet recognition card
+
+Most recent test URL used:
+
+```txt
+https://lukebrush555-hue.github.io/qr-intake-system/templates/samplepass-v1/?v=seal-recognition-1
+```
+
+---
+
+## Current File Structure of Interest
+
+Shared design-system CSS:
 
 ```txt
 assets/css/ropebridge/tokens.css
 assets/css/ropebridge/base.css
 assets/css/ropebridge/components.css
 assets/css/ropebridge/states.css
-configs/samplepass-design-system-v1.js
+```
+
+SamplePass v1 route:
+
+```txt
 templates/samplepass-v1/index.html
 templates/samplepass-v1/app.js
 ```
 
-Safety status of the design-system branch:
+SamplePass v1 config:
 
 ```txt
-7 new files
-0 deletions
-existing samplepass-claim route untouched
-existing samplepass-demo config untouched
+configs/samplepass-design-system-v1.js
+```
+
+Assets:
+
+```txt
+assets/images/samplepass-stand.jpg
+assets/images/ropebridge-seal.svg
+```
+
+Legacy route still present:
+
+```txt
+templates/samplepass-claim/index.html
+templates/samplepass-claim/app.js
+templates/samplepass-claim/styles.css
+configs/samplepass-demo.js
 ```
 
 ---
 
-## Current Product Flow
+## Current Visual Direction
 
-The intended RopeBridge product language describes a 3-state flow:
+The approved direction is **cream + olive + brass**, based on the user’s reference mockup.
 
-1. **Connect**
-2. **Interact**
-3. **Connected**
+The page should feel like:
+
+```txt
+premium artisan product experience
+boutique packaging
+quiet heritage object
+physical-world QR interaction
+```
+
+Not:
+
+```txt
+dark-mode SaaS
+generic web app
+startup dashboard
+QR tool UI
+```
+
+Key color direction:
+
+- cream paper background
+- deep olive primary CTA / seal
+- brass accent text or dividers
+- charcoal-green text
+- soft shadows
+- tactile card surfaces
+
+Important correction:
+
+- Do **not** reintroduce device-driven dark mode for this active SamplePass v1 visual route.
+- The user specifically rejected the dark green/dark-mode appearance because it did not match the cream/olive reference.
+
+---
+
+## Current Active Interact Screen Hierarchy
+
+The approved active order is:
+
+```txt
+centered seal/logo
+Welcome back, Luke.
+image
+Wildflower Raw Honey
+description
+Claim sample
+limit note
+```
+
+Removed from the active interact screen:
+
+```txt
+Backyard Blooms top text
+Raw Honey top subtitle
+SAMPLEPASS eyebrow
+powered by RopeBridge text
+```
+
+Reasoning:
+
+- the logo/seal is enough as the brand/system mark
+- vendor/product context should come from the offer itself
+- avoid duplicating “Honey” in multiple places
+- reduce clutter and make the experience feel premium
+
+Current limitation:
+
+- `assets/images/ropebridge-seal.svg` is a scalable repo-native approximation of the uploaded olive seal.
+- The exact uploaded PNG/photo asset has not yet been committed as a binary repo asset.
+- Next improvement could be replacing or supplementing the SVG with the exact approved olive seal image if needed.
+
+---
+
+## Recognition UX Direction
+
+Recognition is foundational.
+
+Every scan should ask:
+
+```txt
+Have I seen this person before?
+```
+
+Current lightweight recognition uses localStorage:
+
+```txt
+ropebridge-connected
+ropebridge-name
+ropebridge-phone
+```
+
+Current visual treatment:
+
+- centered seal/logo first
+- quiet recognition card below it
+- message: `Welcome back, Luke.` when remembered
+
+Next visual exploration:
+
+- make the recognition card feel less like a status alert and more like a soft personal continuation cue
+- possible wording directions:
+  - `Welcome back, Luke.`
+  - `Good to see you again, Luke.`
+  - `You’re already connected.`
+  - `Ready when you are, Luke.`
+
+Avoid punitive/redeem-like language such as:
+
+```txt
+Already claimed
+One claim used
+Error / duplicate
+```
+
+---
+
+## Product Flow
+
+RopeBridge still follows the 3-state model:
+
+1. **Connect** — lightweight identity handshake
+2. **Interact** — vendor-specific action
+3. **Connected** — persistent relationship continuity
 
 ### State 1 — Connect
 
 Purpose:
 
-- lightweight identity handshake
-- trust establishment
 - phone-first recognition setup
+- minimal capture
+- trust establishment
 
-Default direction:
+Current implementation:
 
-```txt
-Sign in once. Easier every time.
-```
-
-State 1 should feel slightly more institutional/system-level than vendor-specific.
+- first name
+- phone
+- consent checkboxes
+- localStorage save
+- then move to Interact state
 
 ### State 2 — Interact
 
 Purpose:
 
-- vendor-specific action
-- claim sample, save haircut, save preference, request info, etc.
+- vendor/product action
+- current action: claim sample
 
-State 2 should be vendor-first and action-first.
+Current implementation:
+
+- remembered visitor skips Connect and lands here
+- welcome recognition appears when remembered
+- submit inserts lead into Supabase
 
 ### State 3 — Connected
 
 Purpose:
 
-- relationship continuity
-- useful next links
-- not a dead-end redemption screen
+- relationship continuity, not a dead-end redemption screen
+- useful onward links
 
-State 3 should feel like:
+Current implementation:
 
-```txt
-You’re connected now.
-```
-
-not:
-
-```txt
-You already claimed this.
-```
-
----
-
-## Current Existing SamplePass Behavior
-
-The existing `templates/samplepass-claim/` route currently implements a SamplePass flow with:
-
-- brand/vendor header
-- product/offer image
-- offer copy
-- lead/claim interaction
-- localStorage-based remembered visitor behavior
-- Supabase insert into `public.lead_requests`
-- connected/thank-you state
-- vendor social/order links
-
-It loads:
-
-```txt
-../../configs/samplepass-demo.js
-./app.js
-./styles.css
-```
-
-Do not assume this route should be replaced by the design-system route until the user has visually approved it.
-
----
-
-## New Design System v1 Implementation
-
-The design-system branch adds a reusable RopeBridge CSS layer.
-
-### CSS layers
-
-```txt
-assets/css/ropebridge/tokens.css
-```
-
-Defines:
-
-- warm neutral palette
-- rope/brass accent colors
-- dark-mode equivalents
-- spacing scale
-- radius tokens
-- shadow tokens
-- motion tokens
-- flow max width
-
-```txt
-assets/css/ropebridge/base.css
-```
-
-Defines:
-
-- global box sizing
-- body/page foundation
-- mobile-first flow shell
-- state visibility
-- base typography helpers
-- reduced-motion handling
-
-```txt
-assets/css/ropebridge/components.css
-```
-
-Defines:
-
-- cards
-- buttons
-- inputs
-- check rows
-- image containers
-- link rows
-- status text
-- powered-by mark
-- vendor/system headers
-- RB seal treatment
-
-```txt
-assets/css/ropebridge/states.css
-```
-
-Defines:
-
-- Connect state styles
-- Interact/offer state styles
-- recognition banner
-- Connected state styles
-- useful link section
-
-### New SamplePass v1 route
-
-```txt
-templates/samplepass-v1/
-```
-
-Loads:
-
-```txt
-../../assets/css/ropebridge/tokens.css
-../../assets/css/ropebridge/base.css
-../../assets/css/ropebridge/components.css
-../../assets/css/ropebridge/states.css
-../../configs/samplepass-design-system-v1.js
-./app.js
-```
-
-### New SamplePass v1 config
-
-```txt
-configs/samplepass-design-system-v1.js
-```
-
-Uses:
-
-```txt
-window.SAMPLEPASS_DESIGN_SYSTEM_V1_CONFIG
-```
-
-This avoids mutating the existing `window.SAMPLEPASS_DEMO_CONFIG` path.
+- connected state exists
+- social/order links exist in markup/config
+- needs further visual refinement after interact screen is stabilized
 
 ---
 
@@ -309,178 +316,109 @@ Current primary table:
 public.lead_requests
 ```
 
-Current columns:
+Browser behavior:
 
-- `id uuid primary key default gen_random_uuid()`
-- `created_at timestamptz default now()`
-- `project_type text not null default 'generic'`
-- `template_id text not null default 'hero-form'`
-- `source_id text`
-- `qr_id text`
-- `name text`
-- `phone text`
-- `email text`
-- `business_name text`
-- `message text`
-- `metadata jsonb not null default '{}'::jsonb`
-
-Active browser behavior:
-
-- Browser sends `POST /rest/v1/lead_requests`.
-- Headers include `apikey`, `Authorization: Bearer <publishable key>`, `Content-Type: application/json`, and `Prefer: return=minimal`.
-- Browser performs insert only.
-- No browser-side read/update/delete query is expected.
+- direct `POST /rest/v1/lead_requests`
+- publishable key only
+- insert-only browser posture
+- no browser-side read/update/delete expected
 
 RLS assumptions:
 
-- RLS is enabled on `public.lead_requests`.
-- Anonymous insert is allowed.
-- Service role has full trusted access.
-- Browser must remain insert-only and untrusted.
+- RLS enabled
+- anonymous insert allowed
+- service role remains server/trusted only
+- no service_role key in frontend
+
+Current payload includes:
+
+- project type
+- template id
+- source id
+- QR id
+- visitor name/phone
+- business name
+- metadata including product/category/remembered/design-system marker
 
 ---
 
-## Recognition Direction
+## Current UX Rules to Preserve
 
-Recognition continuity is a foundational RopeBridge principle.
+Preserve unless explicitly changed:
 
-Every scan should ask:
-
-```txt
-Have I seen this person before?
-```
-
-Current lightweight implementation uses localStorage keys:
-
-```txt
-ropebridge-connected
-ropebridge-name
-ropebridge-phone
-```
-
-Future durable direction:
-
-```txt
-users table
-interactions table
-localStorage identity pointer
-```
-
-Do not introduce heavy auth unless there is a clear product need.
-
----
-
-## UI / UX Rules
-
-Preserve these rules unless the user explicitly changes direction:
-
-- Mobile-first: QR traffic likely starts on phones.
-- QR-first: optimize for someone arriving from a physical scan/tap.
-- Friction-once: ask only for what is needed at the moment of intent.
-- Reusable templates: campaigns should usually be config plus assets.
-- Bones + config: structure should remain reusable; identity should live in config.
-- State 1 visually distinct from States 2/3.
-- Text-first vendor headers.
-- Do not require vendor logos.
-- Do not require professional photography.
-- Keep forms obvious, tappable, and forgiving.
-- Avoid generic SaaS aesthetics.
-- Avoid dashboards unless operational need proves it.
-- Preserve local/community tone.
-- Connected state is not a dead end.
-- Vendor should be able to socially override friction.
-
----
-
-## Design System Direction
-
-RopeBridge Design System v1 should feel:
-
-- calm
-- grounded
-- physical-world friendly
-- quietly premium
-- text-first
-- warm-neutral
-- reusable
-- implementation-light
-
-Avoid:
-
-- glossy startup UI
-- loud gradients
-- overbuilt dashboards
-- corporate marketing clutter
-- unnecessary animation
-- requiring polished vendor media
-
-The default visual system is based on:
-
-- warm paper backgrounds
-- charcoal ink text
-- muted rope/brass accent
-- rounded tactile cards
-- subtle shadows
-- large mobile tap targets
-- one primary CTA per screen
+- QR-first
+- mobile-first
+- friction once
+- recognition continuity
+- calm premium artisan feeling
+- text-first vendor identity
+- do not require vendor logos
+- do not require professional photography
+- no heavy auth
+- no dashboard unless operationally necessary
+- no generic SaaS styling
+- no dark-mode override for the current cream/olive SamplePass v1 direction
+- no `powered by` text in the active flow unless the user re-asks for it
+- seal/logo can carry the RopeBridge identity without extra explanatory text
 
 ---
 
 ## Known Risks / Technical Debt
 
-- `configs/samplepass-demo.js` contains concrete Supabase project values. They are publishable/browser-safe, but future contributors must not confuse this with permission to expose service-role keys.
-- `.env.example` also contains concrete values rather than placeholders.
-- Config shape is still global-variable based and template-specific.
-- There is no shared config loader yet.
-- There is no durable users/interactions schema yet.
 - localStorage recognition is useful for UX prototyping but not durable across devices.
-- RLS insert policy allows anonymous inserts, so spam protection and rate limiting remain future concerns.
-- No browser/end-to-end visual regression tests exist.
-- No formal design-token build pipeline exists; CSS tokens are hand-authored.
+- no durable `users` / `interactions` tables yet.
+- no shared config loader yet; config is still global-variable based.
+- no visual regression tests.
+- no formal asset pipeline.
+- current seal SVG is an approximation of the uploaded olive wax seal.
+- GitHub Pages / Chrome may cache CSS aggressively; use query cache busters when testing.
+- Chrome Android Desktop Site mode can mislead testing by shrinking the page.
 
 ---
 
 ## Recommended Next Step
 
-Before merging the draft PR, visually test:
+Continue from the active SamplePass v1 route:
 
 ```txt
 templates/samplepass-v1/
 ```
 
-Compare against:
+Immediate next work:
 
-```txt
-templates/samplepass-claim/
-```
+1. Review the actual seal rendering on mobile.
+2. Decide whether to replace the SVG approximation with the exact uploaded olive seal image.
+3. Reimagine the `Welcome back, Luke.` visual treatment.
+4. Continue pushing the page toward the cream/olive reference mockup.
+5. After Interact state is approved, apply the same visual language to Connect and Connected states.
 
-Evaluate:
-
-- Does State 1 feel trustworthy, not threatening?
-- Does State 2 feel vendor-first and not SaaS-heavy?
-- Does State 3 feel useful instead of dead-ended?
-- Does the system still look good without vendor logos?
-- Does the new design system preserve the RopeBridge philosophy?
-
-Only after visual approval should the new route be promoted, merged, or used as the basis for future archetypes.
+Do not revert to the dark app look.
+Do not re-add top vendor text, `SAMPLEPASS`, or `powered by RopeBridge` to the active interact state unless explicitly requested.
 
 ---
 
 ## Quick Start Context for Future AI Sessions
 
-Interpret this project as small product infrastructure for physical-to-digital QR intake experiences.
+Start by reading this file, then inspect:
 
-Do not drift away from:
+```txt
+templates/samplepass-v1/index.html
+assets/css/ropebridge/tokens.css
+assets/css/ropebridge/base.css
+assets/css/ropebridge/components.css
+assets/css/ropebridge/states.css
+templates/samplepass-v1/app.js
+configs/samplepass-design-system-v1.js
+```
 
-- plain static HTML/CSS/JS
-- mobile-first QR landing pages
-- insert-only browser access to Supabase
-- reusable templates over bespoke pages
-- config-driven campaign/vendor differences
-- minimal visitor friction
-- recognition continuity
-- clear security boundaries around Supabase keys and RLS
+The current direction is not “build a website.”
 
-Current active work is the `design-system-v1` branch and draft PR #2. It adds a parallel SamplePass v1 route and shared RopeBridge CSS design-system layer without touching the original SamplePass route.
+The current direction is:
 
-The most important architectural principle is that RopeBridge should make new QR experiences cheap to create without making the codebase feel like a pile of unrelated landing pages. Keep the bones reusable, keep the config explicit, and keep the browser untrusted.
+```txt
+turn a physical QR scan into a premium, remembered, vendor-specific interaction
+```
+
+RopeBridge should make new QR experiences cheap to create without making the repo feel like a pile of unrelated landing pages.
+
+Keep the bones reusable, keep the config explicit, keep the browser untrusted, and keep the experience quiet, physical, and premium.
