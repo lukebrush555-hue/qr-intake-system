@@ -36,18 +36,12 @@
 }
 
 .rb-seal {
-  display: grid;
+  display: block;
   flex: 0 0 auto;
-  width: 58px;
-  height: 58px;
-  place-items: center;
+  width: 76px;
+  height: 76px;
   border-radius: 999px;
-  background: #52603f;
-  color: #eee2bf;
-  font-family: var(--rb-font-serif);
-  font-size: 0;
-  font-weight: 700;
-  box-shadow: var(--rb-shadow-card-soft);
+  background: url("../../images/ropebridge-seal.svg") center / contain no-repeat;
 }
 
 .rb-field-stack {
