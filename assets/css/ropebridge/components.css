@@ -1,0 +1,207 @@
+.rb-card {
+  border: 1px solid var(--rb-border-muted);
+  border-radius: var(--rb-radius-xl);
+  background: var(--rb-surface);
+  box-shadow: var(--rb-shadow-card-soft);
+}
+
+.rb-flow-card {
+  padding: var(--rb-space-3);
+}
+
+.rb-brand-lockup,
+.rb-vendor-lockup {
+  min-width: 0;
+}
+
+.rb-brand-name,
+.rb-vendor-name {
+  margin: 0;
+  color: var(--rb-text-primary);
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.rb-brand-subtitle,
+.rb-vendor-subtitle {
+  margin: 4px 0 0;
+  color: var(--rb-text-secondary);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.rb-seal {
+  display: grid;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid rgba(155, 111, 58, 0.24);
+  border-radius: var(--rb-radius-full);
+  background: linear-gradient(145deg, rgba(255, 253, 248, 0.94), rgba(244, 239, 230, 0.84));
+  color: var(--rb-accent-pressed);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  box-shadow: 0 8px 24px rgba(31, 28, 24, 0.08);
+}
+
+.rb-field-stack {
+  display: grid;
+  gap: 14px;
+  margin-top: var(--rb-space-3);
+}
+
+.rb-field label {
+  display: block;
+  margin-bottom: var(--rb-space-1);
+  color: var(--rb-text-primary);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.rb-input,
+.rb-select {
+  width: 100%;
+  min-height: 54px;
+  border: 1px solid var(--rb-border-muted);
+  border-radius: 14px;
+  background: var(--rb-bg);
+  color: var(--rb-text-primary);
+  padding: 14px 16px;
+  font-size: 17px;
+}
+
+.rb-input:focus-visible,
+.rb-select:focus-visible,
+.rb-button:focus-visible,
+.rb-link-row:focus-visible,
+.rb-check-row:focus-within {
+  outline: none;
+  box-shadow: var(--rb-shadow-focus);
+}
+
+.rb-button {
+  display: inline-grid;
+  width: 100%;
+  min-height: 52px;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: var(--rb-accent-pressed);
+  color: var(--rb-color-paper-000);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    transform var(--rb-motion-fast) var(--rb-ease-standard),
+    box-shadow var(--rb-motion-fast) var(--rb-ease-standard),
+    background var(--rb-motion-fast) var(--rb-ease-standard);
+}
+
+.rb-button:hover {
+  box-shadow: var(--rb-shadow-button);
+}
+
+.rb-button:active {
+  transform: translateY(1px);
+}
+
+.rb-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.rb-button-secondary {
+  background: transparent;
+  color: var(--rb-accent-pressed);
+  border-color: rgba(155, 111, 58, 0.28);
+}
+
+.rb-check-row {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: var(--rb-space-1-5);
+  align-items: start;
+  border-radius: var(--rb-radius-md);
+  color: var(--rb-text-secondary);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.rb-check-row input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--rb-accent-pressed);
+}
+
+.rb-image-container {
+  overflow: hidden;
+  border: 1px solid var(--rb-border-muted);
+  border-radius: 22px;
+  background: var(--rb-surface);
+  aspect-ratio: 4 / 3;
+  box-shadow: var(--rb-shadow-card-soft);
+}
+
+.rb-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rb-link-stack {
+  display: grid;
+  gap: 10px;
+  margin-top: var(--rb-space-2);
+}
+
+.rb-link-row {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rb-space-2);
+  border: 1px solid var(--rb-border-muted);
+  border-radius: 14px;
+  background: var(--rb-surface);
+  color: var(--rb-text-primary);
+  padding: 0 var(--rb-space-2);
+  font-size: 15px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.rb-status {
+  min-height: 22px;
+  margin: var(--rb-space-2) 0 0;
+  color: var(--rb-text-secondary);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.rb-status.is-error {
+  color: var(--rb-color-error);
+}
+
+.rb-status.is-success {
+  color: var(--rb-color-success);
+}
+
+.rb-powered-by {
+  margin-top: 28px;
+  color: var(--rb-text-secondary);
+  font-size: 12px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .rb-flow-card {
+    padding: var(--rb-space-4);
+  }
+}
