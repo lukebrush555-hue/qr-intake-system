@@ -1,0 +1,138 @@
+.rb-connect-card {
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.76), rgba(244, 239, 230, 0.96)),
+    var(--rb-surface);
+}
+
+.rb-connect-copy {
+  margin: var(--rb-space-2) 0 0;
+  color: var(--rb-text-secondary);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.rb-consent-stack {
+  display: grid;
+  gap: var(--rb-space-1-5);
+  margin-top: var(--rb-space-2);
+}
+
+.rb-action-stack {
+  display: grid;
+  gap: var(--rb-space-2);
+  margin-top: var(--rb-space-3);
+}
+
+.rb-offer-card {
+  display: grid;
+  gap: var(--rb-space-3);
+}
+
+.rb-offer-copy {
+  display: grid;
+  gap: var(--rb-space-1-5);
+}
+
+.rb-offer-title {
+  margin: 0;
+  color: var(--rb-text-primary);
+  font-size: 30px;
+  line-height: 1.08;
+  font-weight: 680;
+  letter-spacing: -0.025em;
+}
+
+.rb-offer-description {
+  margin: 0;
+  color: var(--rb-text-secondary);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.rb-limit-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rb-space-1);
+  margin: var(--rb-space-1-5) 0 0;
+  color: var(--rb-text-secondary);
+  font-size: 13px;
+  text-align: center;
+}
+
+.rb-limit-note::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: var(--rb-radius-full);
+  background: var(--rb-color-success);
+}
+
+.rb-recognition-banner {
+  display: none;
+  margin-bottom: var(--rb-space-2);
+  border: 1px solid rgba(63, 111, 78, 0.2);
+  border-radius: var(--rb-radius-lg);
+  background: rgba(63, 111, 78, 0.1);
+  color: var(--rb-color-success);
+  padding: var(--rb-space-1-5) var(--rb-space-2);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.rb-recognition-banner.is-visible {
+  display: block;
+}
+
+.rb-connected-card {
+  display: grid;
+  gap: var(--rb-space-1-5);
+  background:
+    linear-gradient(180deg, rgba(63, 111, 78, 0.1), transparent 42%),
+    var(--rb-surface);
+}
+
+.rb-connected-title {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: 680;
+  letter-spacing: -0.025em;
+}
+
+.rb-connected-body {
+  margin: 0;
+  color: var(--rb-text-secondary);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.rb-saved-row {
+  display: flex;
+  align-items: center;
+  gap: var(--rb-space-1);
+  margin-top: var(--rb-space-2);
+  color: var(--rb-color-success);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.rb-saved-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--rb-radius-full);
+  background: currentColor;
+}
+
+.rb-link-section {
+  margin-top: var(--rb-space-2);
+}
+
+.rb-section-label {
+  margin: 0 0 var(--rb-space-1);
+  color: var(--rb-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
