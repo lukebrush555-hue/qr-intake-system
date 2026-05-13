@@ -1,65 +1,313 @@
 # RopeBridge Current Status
 
+_Last updated: 2026-05-13_
+
 ## Project Identity
 
 RopeBridge is currently represented in this repository as `qr-intake-system`: a reusable, QR-driven intake foundation for turning small physical-world prompts into simple digital landing pages.
 
-The core philosophy is "bones + config": the template is the reusable product surface, while each campaign/vendor/page should mostly be expressed as configuration and assets. The browser-facing experience should stay small, mobile-first, QR-first, and security-conscious.
+The core philosophy is **bones + config**: the template is the reusable product surface, while each campaign/vendor/page should mostly be expressed as configuration and assets. The browser-facing experience should stay small, mobile-first, QR-first, and security-conscious.
 
-The current archetype focus is the SamplePass demo: a visitor scans or opens a static claim page, sees a clear offer for a free QR/NFC stand, submits lightweight contact/business details, and the request is inserted into Supabase.
+RopeBridge is not a generic SaaS dashboard, CMS, ecommerce app, or pile of unrelated landing pages. It is infrastructure for physical-to-digital interactions:
+
+```txt
+physical encounter
+→ QR scan
+→ lightweight identity handshake
+→ vendor-specific interaction
+→ persistent relationship continuity
+```
+
+The current archetype focus is **SamplePass**.
+
+---
+
+## Current Safe Work Branch
+
+A non-destructive design-system implementation is currently in progress on:
+
+```txt
+design-system-v1
+```
+
+Draft PR:
+
+```txt
+https://github.com/lukebrush555-hue/qr-intake-system/pull/2
+```
+
+PR title:
+
+```txt
+Add RopeBridge design system v1 as parallel SamplePass route
+```
+
+Important: this branch was intentionally created as a **parallel layer**, not a replacement. The original SamplePass route and config remain untouched.
+
+---
 
 ## Current Architecture
 
-- Frontend stack: plain static HTML, CSS, and JavaScript. There is no framework, bundler, package manager, or build step.
+- Frontend stack: plain static HTML, CSS, and JavaScript.
+- No framework, bundler, package manager, or build step.
 - Backend/services: Supabase PostgREST is used directly from browser JavaScript for insert-only lead capture.
 - Deployment method: static hosting from the repository root, documented for GitHub Pages and Vercel.
-- Routing/query parameter structure: current routing is path-based only. The active page is `templates/samplepass-claim/`. There is no query-parameter router or `URLSearchParams`-based state/config loader in the current code.
-- Configuration loading: `templates/samplepass-claim/index.html` loads `../../configs/samplepass-demo.js`, which sets `window.SAMPLEPASS_DEMO_CONFIG`.
+- Browser remains untrusted.
+- Supabase service-role keys must never be exposed in frontend code.
+- RLS remains the core database safety boundary.
+
+---
+
+## Current Routes
+
+### Existing/live route
+
+```txt
+templates/samplepass-claim/
+```
+
+This is the existing SamplePass implementation. Do not casually overwrite it.
+
+### New opt-in design-system route
+
+```txt
+templates/samplepass-v1/
+```
+
+This route was added on the `design-system-v1` branch as a safe test lane for RopeBridge Design System v1.
+
+Purpose:
+
+- test the new design system without disturbing the original page
+- create a reusable visual layer for future RopeBridge archetypes
+- preserve the 3-state Connect → Interact → Connected product model
+
+---
 
 ## Repository Structure
 
-- `README.md`: setup, deployment, Supabase, security, and testing instructions for the QR intake system.
+Key existing files:
+
+- `README.md`: setup, deployment, Supabase, security, and testing instructions.
 - `PROJECT_CONTEXT.md`: product philosophy and project boundaries.
-- `AGENTS.md`: operating rules for future Codex/AI work in the repo.
+- `AGENTS.md`: operating rules for future Codex/AI work.
+- `ROPEBRIDGE_STATUS.md`: this new-chat handoff/status file.
 - `.env.example`: local example values for `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`.
-- `configs/samplepass-demo.js`: browser-facing SamplePass configuration, including Supabase URL/key, content strings, asset path, and tracking IDs.
-- `templates/samplepass-claim/index.html`: current active static landing page and form markup.
-- `templates/samplepass-claim/app.js`: config binding, validation, form submission, and Supabase insert logic.
-- `templates/samplepass-claim/styles.css`: mobile-first visual styling for the SamplePass claim page.
-- `templates/hero-form/.gitkeep`: reserved namespace for a future reusable hero/form template.
-- `assets/images/samplepass-stand.jpg`: current offer image for the SamplePass demo.
-- `shared/.gitkeep`: placeholder for future reusable browser-safe helpers.
+- `configs/samplepass-demo.js`: existing SamplePass config.
+- `templates/samplepass-claim/index.html`: existing SamplePass markup.
+- `templates/samplepass-claim/app.js`: existing SamplePass behavior.
+- `templates/samplepass-claim/styles.css`: existing SamplePass styling.
+- `assets/images/samplepass-stand.jpg`: current offer image.
 - `supabase/schema.sql`: current Supabase schema and RLS grants/policy.
 - `supabase/migrations/202605060001_init_lead_requests.sql`: migration matching `schema.sql`.
 - `.github/workflows/ci.yml`: minimal CI that validates JSON and checks JavaScript syntax.
 
-## Current User Flow
+New files added on `design-system-v1`:
+
+```txt
+assets/css/ropebridge/tokens.css
+assets/css/ropebridge/base.css
+assets/css/ropebridge/components.css
+assets/css/ropebridge/states.css
+configs/samplepass-design-system-v1.js
+templates/samplepass-v1/index.html
+templates/samplepass-v1/app.js
+```
+
+Safety status of the design-system branch:
+
+```txt
+7 new files
+0 deletions
+existing samplepass-claim route untouched
+existing samplepass-demo config untouched
+```
+
+---
+
+## Current Product Flow
 
 The intended RopeBridge product language describes a 3-state flow:
 
-1. Connect
-2. Interact
-3. Connected
+1. **Connect**
+2. **Interact**
+3. **Connected**
 
-In the current implementation, only the "Interact" state is concretely implemented as a single SamplePass claim form. The visitor lands directly on the claim page, reviews the offer, enters details, and submits the request.
+### State 1 — Connect
 
-Current implementation details:
+Purpose:
 
-- The HTML page renders a brand header, product/offer image, offer copy, and lead form.
-- Configurable text and image values are applied via `data-config-text`, `data-config-src`, and `data-config-alt` attributes.
-- The form collects `name`, `phone`, `business_name`, and optional `notes`.
-- HTML constraint validation is used, with required fields for name, phone, and business name.
-- On submit, the button is disabled, status text changes to a sending state, and the browser sends a `POST` to Supabase.
-- On success, the form resets and displays `SUCCESS_MESSAGE`.
-- On failure, a generic retry message is shown and the error is logged to the console.
+- lightweight identity handshake
+- trust establishment
+- phone-first recognition setup
 
-State 1 ("Connect") and State 3 ("Connected") are product concepts but are not yet separate implemented routes, screens, or persisted UI states in this repository.
+Default direction:
+
+```txt
+Sign in once. Easier every time.
+```
+
+State 1 should feel slightly more institutional/system-level than vendor-specific.
+
+### State 2 — Interact
+
+Purpose:
+
+- vendor-specific action
+- claim sample, save haircut, save preference, request info, etc.
+
+State 2 should be vendor-first and action-first.
+
+### State 3 — Connected
+
+Purpose:
+
+- relationship continuity
+- useful next links
+- not a dead-end redemption screen
+
+State 3 should feel like:
+
+```txt
+You’re connected now.
+```
+
+not:
+
+```txt
+You already claimed this.
+```
+
+---
+
+## Current Existing SamplePass Behavior
+
+The existing `templates/samplepass-claim/` route currently implements a SamplePass flow with:
+
+- brand/vendor header
+- product/offer image
+- offer copy
+- lead/claim interaction
+- localStorage-based remembered visitor behavior
+- Supabase insert into `public.lead_requests`
+- connected/thank-you state
+- vendor social/order links
+
+It loads:
+
+```txt
+../../configs/samplepass-demo.js
+./app.js
+./styles.css
+```
+
+Do not assume this route should be replaced by the design-system route until the user has visually approved it.
+
+---
+
+## New Design System v1 Implementation
+
+The design-system branch adds a reusable RopeBridge CSS layer.
+
+### CSS layers
+
+```txt
+assets/css/ropebridge/tokens.css
+```
+
+Defines:
+
+- warm neutral palette
+- rope/brass accent colors
+- dark-mode equivalents
+- spacing scale
+- radius tokens
+- shadow tokens
+- motion tokens
+- flow max width
+
+```txt
+assets/css/ropebridge/base.css
+```
+
+Defines:
+
+- global box sizing
+- body/page foundation
+- mobile-first flow shell
+- state visibility
+- base typography helpers
+- reduced-motion handling
+
+```txt
+assets/css/ropebridge/components.css
+```
+
+Defines:
+
+- cards
+- buttons
+- inputs
+- check rows
+- image containers
+- link rows
+- status text
+- powered-by mark
+- vendor/system headers
+- RB seal treatment
+
+```txt
+assets/css/ropebridge/states.css
+```
+
+Defines:
+
+- Connect state styles
+- Interact/offer state styles
+- recognition banner
+- Connected state styles
+- useful link section
+
+### New SamplePass v1 route
+
+```txt
+templates/samplepass-v1/
+```
+
+Loads:
+
+```txt
+../../assets/css/ropebridge/tokens.css
+../../assets/css/ropebridge/base.css
+../../assets/css/ropebridge/components.css
+../../assets/css/ropebridge/states.css
+../../configs/samplepass-design-system-v1.js
+./app.js
+```
+
+### New SamplePass v1 config
+
+```txt
+configs/samplepass-design-system-v1.js
+```
+
+Uses:
+
+```txt
+window.SAMPLEPASS_DESIGN_SYSTEM_V1_CONFIG
+```
+
+This avoids mutating the existing `window.SAMPLEPASS_DEMO_CONFIG` path.
+
+---
 
 ## Supabase Integration
 
-Current tables:
+Current primary table:
 
-- `public.lead_requests`
+```txt
+public.lead_requests
+```
 
 Current columns:
 
@@ -76,108 +324,151 @@ Current columns:
 - `message text`
 - `metadata jsonb not null default '{}'::jsonb`
 
-Active queries:
+Active browser behavior:
 
-- Browser code sends `POST /rest/v1/lead_requests`.
+- Browser sends `POST /rest/v1/lead_requests`.
 - Headers include `apikey`, `Authorization: Bearer <publishable key>`, `Content-Type: application/json`, and `Prefer: return=minimal`.
-- The code does not call `.select()` or perform any browser-side read/update/delete query.
+- Browser performs insert only.
+- No browser-side read/update/delete query is expected.
 
-Environment/config variables referenced:
-
-- `SUPABASE_URL`
-- `SUPABASE_PUBLISHABLE_KEY`
-
-Additional browser config values:
-
-- `BRAND_NAME`
-- `OFFER_HEADLINE`
-- `SUBHEADLINE`
-- `FREE_ITEM`
-- `CTA_LABEL`
-- `SUCCESS_MESSAGE`
-- `IMAGE_SRC`
-- `PROJECT_TYPE`
-- `TEMPLATE_ID`
-- `SOURCE_ID`
-- `QR_ID`
-
-Auth/session approach:
-
-- There is no user auth, login, session handling, dashboard, or authenticated app flow.
-- The frontend uses the Supabase publishable key as an anonymous browser client credential for direct insert.
-
-RLS assumptions visible in code/schema:
+RLS assumptions:
 
 - RLS is enabled on `public.lead_requests`.
-- `anon` and `authenticated` are revoked broadly first.
-- `anon` is granted schema usage and insert access on `public.lead_requests`.
-- A single policy allows anonymous inserts with `with check (true)`.
-- `service_role` has full access for trusted server-side or Supabase-side operations.
-- Browser access is intentionally insert-only.
+- Anonymous insert is allowed.
+- Service role has full trusted access.
+- Browser must remain insert-only and untrusted.
 
-## Current Working Features
+---
 
-- Static SamplePass claim page can run without a build step.
-- Config-driven copy, image source, alt text, CTA label, success message, and tracking fields.
-- Mobile-first responsive layout with a two-column desktop layout at wider widths.
-- Lead form with required fields and optional notes.
-- Direct Supabase insert into `public.lead_requests`.
-- Insert payload includes project/template/source/QR identifiers plus `metadata.free_item` and `metadata.notes`.
-- Success/error/sending status messages are visible to users.
-- Supabase schema and migration are present.
-- Basic CI checks JavaScript syntax and JSON validity.
-- Static deployment path is documented for GitHub Pages and Vercel.
+## Recognition Direction
 
-## Incomplete / Planned Features
+Recognition continuity is a foundational RopeBridge principle.
 
-- The full RopeBridge 3-state Connect -> Interact -> Connected flow is not yet implemented as distinct screens/states.
-- `templates/hero-form/` is reserved but not implemented.
-- `shared/` exists only as a placeholder.
-- No reusable template engine or shared config loader exists yet.
-- No query-parameter-based routing, QR-specific parameter parsing, or dynamic config resolution exists.
-- No admin dashboard, lead viewer, CRM integration, notifications, or follow-up automation exists.
-- No server-side functions or trusted backend layer exists.
-- No anti-spam/rate-limit/honeypot validation is implemented in the browser or database policy.
-- No robust phone normalization, email capture, or schema-level field validation is implemented.
-- No automated browser/end-to-end test coverage exists.
-- No visual variants for multiple vendors/archetypes exist yet beyond SamplePass.
+Every scan should ask:
+
+```txt
+Have I seen this person before?
+```
+
+Current lightweight implementation uses localStorage keys:
+
+```txt
+ropebridge-connected
+ropebridge-name
+ropebridge-phone
+```
+
+Future durable direction:
+
+```txt
+users table
+interactions table
+localStorage identity pointer
+```
+
+Do not introduce heavy auth unless there is a clear product need.
+
+---
 
 ## UI / UX Rules
 
-Preserve these rules unless the user explicitly changes the product direction:
+Preserve these rules unless the user explicitly changes direction:
 
-- Mobile-first: QR traffic likely starts on phones; the first viewport should be immediately useful.
-- QR-first: optimize for someone arriving from a physical scan/tap with limited patience.
-- Friction-once: ask for only the minimum needed information at the moment of intent.
-- Reusable templates: new campaigns should usually be config plus assets, not new one-off sites.
-- Bones + config: template structure should remain reusable; vendor/campaign identity should live in config.
-- State 1 visually distinct from States 2/3: the initial connect moment should feel different from interaction and confirmation once those states are implemented.
-- Text-first vendor headers: favor clear vendor names/offers over overly decorative SaaS chrome.
-- Avoid overengineered SaaS aesthetics: keep the UI grounded, direct, and physical-world friendly rather than dashboard-like or marketing-heavy.
+- Mobile-first: QR traffic likely starts on phones.
+- QR-first: optimize for someone arriving from a physical scan/tap.
+- Friction-once: ask only for what is needed at the moment of intent.
+- Reusable templates: campaigns should usually be config plus assets.
+- Bones + config: structure should remain reusable; identity should live in config.
+- State 1 visually distinct from States 2/3.
+- Text-first vendor headers.
+- Do not require vendor logos.
+- Do not require professional photography.
 - Keep forms obvious, tappable, and forgiving.
-- Do not add frameworks, auth, CMS, ecommerce, or dashboards unless there is a clear product need.
+- Avoid generic SaaS aesthetics.
+- Avoid dashboards unless operational need proves it.
+- Preserve local/community tone.
+- Connected state is not a dead end.
+- Vendor should be able to socially override friction.
+
+---
+
+## Design System Direction
+
+RopeBridge Design System v1 should feel:
+
+- calm
+- grounded
+- physical-world friendly
+- quietly premium
+- text-first
+- warm-neutral
+- reusable
+- implementation-light
+
+Avoid:
+
+- glossy startup UI
+- loud gradients
+- overbuilt dashboards
+- corporate marketing clutter
+- unnecessary animation
+- requiring polished vendor media
+
+The default visual system is based on:
+
+- warm paper backgrounds
+- charcoal ink text
+- muted rope/brass accent
+- rounded tactile cards
+- subtle shadows
+- large mobile tap targets
+- one primary CTA per screen
+
+---
 
 ## Known Risks / Technical Debt
 
-- `configs/samplepass-demo.js` contains concrete Supabase project values; they are publishable/browser-safe, but future contributors must not confuse this with permission to expose service-role keys.
-- `.env.example` also contains concrete values rather than placeholders, which is convenient but may blur the line between example and deployment config.
-- Config shape is currently global-variable based and template-specific (`window.SAMPLEPASS_DEMO_CONFIG`), which will not scale cleanly to many templates/vendors.
-- Form field reading assumes all requested fields exist and calls `.trim()` directly on `FormData` values.
-- There is no network timeout or retry strategy around submission.
-- Error handling is intentionally generic and does not expose Supabase response details to the user.
-- RLS insert policy allows any anonymous insert, so spam protection and rate limiting are future concerns.
-- No schema constraints enforce required lead fields beyond broad column types/defaults.
-- `schema.sql` and the migration duplicate the same SQL and must be kept in sync manually.
-- The current UI is one concrete SamplePass page; extracting a reusable `hero-form` pattern remains future work.
-- There is no implemented Connect/Connected state persistence, so future sessions should not assume a completed RopeBridge flow exists.
+- `configs/samplepass-demo.js` contains concrete Supabase project values. They are publishable/browser-safe, but future contributors must not confuse this with permission to expose service-role keys.
+- `.env.example` also contains concrete values rather than placeholders.
+- Config shape is still global-variable based and template-specific.
+- There is no shared config loader yet.
+- There is no durable users/interactions schema yet.
+- localStorage recognition is useful for UX prototyping but not durable across devices.
+- RLS insert policy allows anonymous inserts, so spam protection and rate limiting remain future concerns.
+- No browser/end-to-end visual regression tests exist.
+- No formal design-token build pipeline exists; CSS tokens are hand-authored.
+
+---
 
 ## Recommended Next Step
 
-Implement the reusable 3-state RopeBridge template skeleton in plain HTML/CSS/JS, preserving the current SamplePass behavior as one config-driven instance. The highest-leverage version of that step is to extract a generic config contract and state model for Connect -> Interact -> Connected before adding more vendors or visual variants.
+Before merging the draft PR, visually test:
+
+```txt
+templates/samplepass-v1/
+```
+
+Compare against:
+
+```txt
+templates/samplepass-claim/
+```
+
+Evaluate:
+
+- Does State 1 feel trustworthy, not threatening?
+- Does State 2 feel vendor-first and not SaaS-heavy?
+- Does State 3 feel useful instead of dead-ended?
+- Does the system still look good without vendor logos?
+- Does the new design system preserve the RopeBridge philosophy?
+
+Only after visual approval should the new route be promoted, merged, or used as the basis for future archetypes.
+
+---
 
 ## Quick Start Context for Future AI Sessions
 
-Interpret this project as small product infrastructure for physical-to-digital QR intake experiences. It is not a SaaS dashboard, not a CMS, not an ecommerce app, and not an auth system.
+Interpret this project as small product infrastructure for physical-to-digital QR intake experiences.
 
 Do not drift away from:
 
@@ -187,6 +478,9 @@ Do not drift away from:
 - reusable templates over bespoke pages
 - config-driven campaign/vendor differences
 - minimal visitor friction
+- recognition continuity
 - clear security boundaries around Supabase keys and RLS
+
+Current active work is the `design-system-v1` branch and draft PR #2. It adds a parallel SamplePass v1 route and shared RopeBridge CSS design-system layer without touching the original SamplePass route.
 
 The most important architectural principle is that RopeBridge should make new QR experiences cheap to create without making the codebase feel like a pile of unrelated landing pages. Keep the bones reusable, keep the config explicit, and keep the browser untrusted.
