@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SamplePass — RopeBridge Design System v1</title>
+    <link rel="stylesheet" href="../../assets/css/ropebridge/tokens.css" />
+    <link rel="stylesheet" href="../../assets/css/ropebridge/base.css" />
+    <link rel="stylesheet" href="../../assets/css/ropebridge/components.css" />
+    <link rel="stylesheet" href="../../assets/css/ropebridge/states.css" />
+  </head>
+  <body>
+    <main class="rb-flow-page">
+      <div class="rb-flow-shell">
+        <section id="state-connect" class="rb-screen-state is-active" aria-labelledby="connect-title">
+          <header class="rb-state-header">
+            <div class="rb-brand-lockup">
+              <p class="rb-brand-name" data-config-text="SYSTEM_NAME">SamplePass</p>
+              <p class="rb-brand-subtitle" data-config-text="SYSTEM_SUBTITLE">powered by RopeBridge</p>
+            </div>
+            <div class="rb-seal" aria-hidden="true">RB</div>
+          </header>
+
+          <section class="rb-card rb-flow-card rb-connect-card">
+            <p class="rb-eyebrow">Connect</p>
+            <h1 id="connect-title" class="rb-title" data-config-text="CONNECT_HEADLINE">
+              Sign in once. Easier every time.
+            </h1>
+            <p class="rb-body" data-config-text="CONNECT_SUBHEADLINE">
+              Use your phone number so participating vendors can recognize you when you scan again.
+            </p>
+
+            <form id="connect-form" novalidate>
+              <div class="rb-field-stack">
+                <div class="rb-field">
+                  <label for="connect-name">First name</label>
+                  <input id="connect-name" class="rb-input" name="name" type="text" autocomplete="given-name" required />
+                </div>
+
+                <div class="rb-field">
+                  <label for="connect-phone">Phone</label>
+                  <input id="connect-phone" class="rb-input" name="phone" type="tel" autocomplete="tel" inputmode="tel" required />
+                </div>
+              </div>
+
+              <p class="rb-connect-copy" data-config-text="CONNECT_BODY">
+                No password. No account to manage. Just a faster path back to the vendor you already met.
+              </p>
+
+              <div class="rb-consent-stack">
+                <label class="rb-check-row">
+                  <input type="checkbox" required />
+                  <span>I consent to use this phone number for recognition when I scan again.</span>
+                </label>
+                <label class="rb-check-row">
+                  <input type="checkbox" required />
+                  <span>I’d like to receive offers, samples, and updates from participating vendors.</span>
+                </label>
+              </div>
+
+              <div class="rb-action-stack">
+                <button id="connect-button" class="rb-button" type="submit" data-config-text="CONNECT_PRIMARY_ACTION">
+                  Continue
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <p class="rb-powered-by">powered by RopeBridge</p>
+        </section>
+
+        <section id="state-interact" class="rb-screen-state" aria-labelledby="offer-title">
+          <header class="rb-state-header">
+            <div class="rb-vendor-lockup">
+              <p class="rb-vendor-name" data-config-text="BRAND_NAME">Backyard Blooms</p>
+              <p class="rb-vendor-subtitle" data-config-text="PRODUCT_CATEGORY">Raw Honey</p>
+            </div>
+            <div class="rb-seal" aria-hidden="true">RB</div>
+          </header>
+
+          <div id="recognition-banner" class="rb-recognition-banner" role="status"></div>
+
+          <section class="rb-card rb-flow-card rb-offer-card">
+            <div class="rb-image-container">
+              <img src="../../assets/images/samplepass-stand.jpg" alt="Backyard Blooms sample" data-config-src="IMAGE_SRC" data-config-alt="IMAGE_ALT" />
+            </div>
+
+            <div class="rb-offer-copy">
+              <p class="rb-eyebrow">SamplePass</p>
+              <h1 id="offer-title" class="rb-offer-title" data-config-text="PRODUCT_NAME">Wildflower Raw Honey</h1>
+              <p class="rb-offer-description" data-config-text="PRODUCT_DESCRIPTION">
+                Made locally in small seasonal batches using wildflower nectar gathered throughout the Saucon Valley region.
+              </p>
+            </div>
+
+            <form id="samplepass-form" novalidate>
+              <button id="submit-button" class="rb-button" type="submit" data-config-text="CTA_LABEL">Claim sample</button>
+              <p class="rb-limit-note" data-config-text="LIMIT_NOTE">One claim per person, per day.</p>
+              <p id="form-status" class="rb-status" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <p class="rb-powered-by">powered by RopeBridge</p>
+        </section>
+
+        <section id="state-connected" class="rb-screen-state" aria-labelledby="connected-title">
+          <header class="rb-state-header">
+            <div class="rb-vendor-lockup">
+              <p class="rb-vendor-name" data-config-text="BRAND_NAME">Backyard Blooms</p>
+              <p class="rb-vendor-subtitle" data-config-text="PRODUCT_CATEGORY">Raw Honey</p>
+            </div>
+            <div class="rb-seal" aria-hidden="true">RB</div>
+          </header>
+
+          <section class="rb-card rb-flow-card rb-connected-card">
+            <p class="rb-eyebrow">Connected</p>
+            <h1 id="connected-title" class="rb-connected-title" data-config-text="CONNECTED_HEADLINE">You’re connected.</h1>
+            <p class="rb-connected-body" data-config-text="CONNECTED_BODY">
+              Next time you scan, we’ll know where to pick up. You can also use this page to find Backyard Blooms again.
+            </p>
+            <div class="rb-saved-row">
+              <span class="rb-saved-dot" aria-hidden="true"></span>
+              <span data-config-text="CONNECTED_NOTE">Your details are saved for next time.</span>
+            </div>
+          </section>
+
+          <section class="rb-link-section" aria-labelledby="links-title">
+            <p id="links-title" class="rb-section-label">Useful links</p>
+            <div class="rb-link-stack">
+              <a class="rb-link-row" data-social="order" href="#"><span>Order online</span><span aria-hidden="true">↗</span></a>
+              <a class="rb-link-row" data-social="instagram" href="#"><span>Instagram</span><span aria-hidden="true">↗</span></a>
+              <a class="rb-link-row" data-social="facebook" href="#"><span>Facebook</span><span aria-hidden="true">↗</span></a>
+              <a class="rb-link-row" data-social="website" href="#"><span>Website</span><span aria-hidden="true">↗</span></a>
+            </div>
+          </section>
+
+          <p class="rb-powered-by">powered by RopeBridge</p>
+        </section>
+      </div>
+    </main>
+
+    <script src="../../configs/samplepass-design-system-v1.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
