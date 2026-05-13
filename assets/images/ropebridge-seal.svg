@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="RopeBridge seal">
+  <defs>
+    <radialGradient id="wax" cx="42%" cy="32%" r="68%">
+      <stop offset="0" stop-color="#7d8661"/>
+      <stop offset="0.48" stop-color="#5f7044"/>
+      <stop offset="1" stop-color="#334323"/>
+    </radialGradient>
+    <radialGradient id="light" cx="30%" cy="18%" r="36%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softShadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#1f2418" flood-opacity="0.22"/>
+    </filter>
+    <filter id="engrave" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1" stdDeviation="0.8" flood-color="#fff8ec" flood-opacity="0.18"/>
+      <feDropShadow dx="0" dy="-1" stdDeviation="0.8" flood-color="#142416" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <path filter="url(#softShadow)" fill="url(#wax)" d="M82 132c32-55 88-66 143-53 43 10 67-26 119-8 54 19 82 66 80 124-2 45 35 77 19 130-17 56-65 86-123 85-43-1-72 36-126 19-54-17-86-62-87-119-1-43-43-72-35-123 3-20 1-35 10-55Z"/>
+  <path fill="url(#light)" d="M82 132c32-55 88-66 143-53 43 10 67-26 119-8 54 19 82 66 80 124-2 45 35 77 19 130-17 56-65 86-123 85-43-1-72 36-126 19-54-17-86-62-87-119-1-43-43-72-35-123 3-20 1-35 10-55Z"/>
+
+  <ellipse cx="256" cy="252" rx="154" ry="122" fill="none" stroke="#e9dfbf" stroke-opacity="0.24" stroke-width="8"/>
+  <ellipse cx="256" cy="252" rx="133" ry="102" fill="none" stroke="#142416" stroke-opacity="0.22" stroke-width="2"/>
+
+  <g filter="url(#engrave)" fill="none" stroke="#e9dfbf" stroke-opacity="0.55" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M136 313h38M338 313h38"/>
+    <path d="M155 313V171M357 313V171"/>
+    <path d="M147 180h16M349 180h16"/>
+    <path d="M155 205c54 42 148 42 202 0"/>
+    <path d="M155 234c54 56 148 56 202 0"/>
+    <path d="M190 230v85M221 241v78M256 245v80M291 241v78M322 230v85"/>
+    <path d="M172 194l-27 30M340 194l27 30"/>
+    <path d="M218 126c20 19 35 35 38 62"/>
+    <path d="M256 188c7-31 20-49 43-67"/>
+    <path d="M240 149c-20-6-34-19-43-37 21 2 37 14 43 37Z"/>
+    <path d="M272 146c17-11 27-26 29-44-19 7-31 22-29 44Z"/>
+    <path d="M253 166c-17 0-31-8-43-23 18-5 34 3 43 23Z"/>
+    <path d="M272 169c15-5 26-17 33-33-17 0-31 11-33 33Z"/>
+  </g>
+</svg>
