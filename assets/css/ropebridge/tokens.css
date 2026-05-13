@@ -1,0 +1,74 @@
+:root {
+  --rb-color-ink-900: #1f1c18;
+  --rb-color-ink-700: #4b4338;
+  --rb-color-ink-500: #756b5e;
+  --rb-color-paper-000: #fffdf8;
+  --rb-color-paper-100: #f4efe6;
+  --rb-color-paper-200: #e8ddce;
+  --rb-color-rope-500: #9b6f3a;
+  --rb-color-rope-700: #65451f;
+  --rb-color-success: #3f6f4e;
+  --rb-color-warning: #b7791f;
+  --rb-color-error: #a23a2e;
+  --rb-color-info: #3e5f73;
+
+  --rb-bg: var(--rb-color-paper-000);
+  --rb-surface: var(--rb-color-paper-100);
+  --rb-surface-raised: #fffaf0;
+  --rb-text-primary: var(--rb-color-ink-900);
+  --rb-text-secondary: var(--rb-color-ink-700);
+  --rb-accent: var(--rb-color-rope-500);
+  --rb-accent-pressed: var(--rb-color-rope-700);
+  --rb-border-muted: rgba(31, 28, 24, 0.12);
+
+  --rb-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  --rb-font-serif: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+
+  --rb-space-0: 0;
+  --rb-space-0-5: 4px;
+  --rb-space-1: 8px;
+  --rb-space-1-5: 12px;
+  --rb-space-2: 16px;
+  --rb-space-3: 24px;
+  --rb-space-4: 32px;
+  --rb-space-6: 48px;
+  --rb-space-8: 64px;
+  --rb-space-12: 96px;
+  --rb-space-16: 128px;
+
+  --rb-radius-sm: 8px;
+  --rb-radius-md: 12px;
+  --rb-radius-lg: 18px;
+  --rb-radius-xl: 24px;
+  --rb-radius-full: 999px;
+
+  --rb-shadow-card: 0 18px 48px rgba(31, 28, 24, 0.08);
+  --rb-shadow-card-soft: 0 8px 24px rgba(31, 28, 24, 0.06);
+  --rb-shadow-button: 0 6px 14px rgba(101, 69, 31, 0.18);
+  --rb-shadow-focus: 0 0 0 4px rgba(155, 111, 58, 0.22);
+
+  --rb-flow-max-width: 420px;
+  --rb-page-padding-mobile: 20px;
+  --rb-page-padding-tablet: 32px;
+
+  --rb-motion-fast: 120ms;
+  --rb-motion-base: 180ms;
+  --rb-motion-slow: 260ms;
+  --rb-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --rb-bg: #171512;
+    --rb-surface: #211e19;
+    --rb-surface-raised: #2c271f;
+    --rb-text-primary: #f8f2e8;
+    --rb-text-secondary: #cfc3b3;
+    --rb-accent: #c79a5b;
+    --rb-accent-pressed: #e0b878;
+    --rb-border-muted: rgba(248, 242, 232, 0.14);
+    color-scheme: dark;
+  }
+}
