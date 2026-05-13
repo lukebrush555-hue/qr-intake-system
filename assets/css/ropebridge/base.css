@@ -47,9 +47,16 @@ img {
 .rb-flow-page {
   min-height: 100vh;
   display: grid;
-  place-items: center;
+  align-items: start;
+  justify-items: center;
   padding: calc(env(safe-area-inset-top) + var(--rb-page-padding-mobile)) var(--rb-page-padding-mobile)
     calc(env(safe-area-inset-bottom) + 24px);
+}
+
+@supports (min-height: 100svh) {
+  .rb-flow-page {
+    min-height: 100svh;
+  }
 }
 
 .rb-flow-shell {
@@ -101,8 +108,19 @@ img {
   color: var(--rb-text-secondary);
 }
 
+@media (max-width: 480px) {
+  .rb-flow-page {
+    padding-inline: 12px;
+  }
+
+  .rb-flow-shell {
+    max-width: none;
+  }
+}
+
 @media (min-width: 768px) {
   .rb-flow-page {
+    align-items: center;
     padding-inline: var(--rb-page-padding-tablet);
   }
 }
